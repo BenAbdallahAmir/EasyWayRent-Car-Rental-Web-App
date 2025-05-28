@@ -70,19 +70,6 @@ CREATE TABLE `cars` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `cars`
---
-
-INSERT INTO `cars` (`id`, `category_id`, `model`, `brand`, `doors`, `luggage`, `passengers`, `year`, `status`, `price_per_day`, `image`, `license_plate`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'CAR1', 'CAR1', 2, 1, 2, '2025', 'rented', 100.00, 'car_images/1746849794_nIyshquc6WgU7g4deqHnFxLFVoy7WlzXarNlvON6.jpg', 'TEST1', 'EAZEAEAAEAA', '2025-05-01 19:05:50', '2025-05-10 03:03:14'),
-(2, 1, 'CAR2', 'CAR2', 2, 10, 2, '2025', 'rented', 900.00, 'car_images/1746849933_3jN16I8auwLtbV6ATwPvbGz8maji9jfJT6mBFEgh.jpg', 'NEW1', 'NEWNEWNEW', '2025-05-02 21:56:01', '2025-05-10 03:05:33'),
-(5, 1, 'CAR3', 'CAR3', 2, 4, 2, '2025', 'available', 321.00, 'car_images/1746849822_nIyshquc6WgU7g4deqHnFxLFVoy7WlzXarNlvON6.jpg', 'eazzzzzz', 'aezzzzzzzzzz', '2025-05-10 02:23:35', '2025-05-16 10:56:21'),
-(6, 1, 'CAR4', 'CAR4', 2, 4, 2, '2025', 'available', 78.00, 'car_images/1746849954_3jN16I8auwLtbV6ATwPvbGz8maji9jfJT6mBFEgh.jpg', 'azraz', 'azrzarza', '2025-05-10 02:32:01', '2025-05-10 03:05:54'),
-(7, 2, 'CAR5', 'CAR5', 2, 5, 2, '2025', 'available', 90.00, 'car_images/1746896631_car1.jpg', '123CAR5123', 'CAR5CAR5CAR5', '2025-05-10 16:03:52', '2025-05-10 16:03:52');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `carts`
 --
 
@@ -232,18 +219,6 @@ CREATE TABLE `personal_access_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `personal_access_tokens`
---
-
-INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
-(13, 'App\\Models\\User', 1, 'auth_token', 'a9666fa1d7c81464dd406dee9a09a755b4a52c7902a86002a63579184171c6ac', '[\"*\"]', '2025-05-02 12:21:18', NULL, '2025-05-02 12:19:13', '2025-05-02 12:21:18'),
-(14, 'App\\Models\\User', 3, 'auth_token', '32d1e99b41725589105f98829a9bc6290ebb3a2913a005dcc23e8f999f3758c6', '[\"*\"]', NULL, NULL, '2025-05-02 22:56:23', '2025-05-02 22:56:23'),
-(15, 'App\\Models\\User', 1, 'auth_token', 'dbff4b4bf3cca011eeacc51ea080b3dd01e5f4ed80fa1d30db93e7b1926a7d53', '[\"*\"]', NULL, NULL, '2025-05-02 22:57:33', '2025-05-02 22:57:33'),
-(57, 'App\\Models\\User', 2, 'auth_token', '787cdd1f67c87afe2a046d65fcaecb775ad845c73caaf8eb46adf4b12332588d', '[\"*\"]', NULL, NULL, '2025-05-16 10:54:29', '2025-05-16 10:54:29');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `reservations`
 --
 
@@ -261,18 +236,6 @@ CREATE TABLE `reservations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `reservations`
---
-
-INSERT INTO `reservations` (`id`, `user_id`, `car_id`, `start_date`, `end_date`, `pickup_location`, `dropoff_location`, `total_price`, `payment_method`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, '2025-07-01', '2025-07-07', 'Paris', 'Lyon', 600.00, 'credit_card', 'pending', '2025-05-01 19:06:56', '2025-05-01 19:06:56'),
-(2, 1, 1, '2025-09-01', '2025-09-07', 'Paris', 'Lyon', 600.00, 'credit_card', 'confirmed', '2025-05-02 12:21:18', '2025-05-02 12:28:30'),
-(3, 4, 2, '2025-07-01', '2025-10-07', 'Mahdia', 'Gafsa', 88200.00, 'credit_card', 'completed', '2025-05-04 13:25:47', '2025-05-04 14:03:58'),
-(5, 6, 2, '2025-05-04', '2025-05-07', 'Mahdia', 'Tunis', 2700.00, 'credit_card', 'pending', '2025-05-04 15:03:01', '2025-05-04 15:03:01'),
-(6, 2, 5, '2025-05-10', '2025-05-12', 'Gafsa', 'Tunis', 642.00, 'credit_card', 'completed', '2025-05-10 13:00:54', '2025-05-10 15:41:25'),
-(7, 6, 5, '2025-05-16', '2025-05-17', 'Sousse', 'Tunis', 321.00, 'credit_card', 'completed', '2025-05-16 10:54:08', '2025-05-16 10:56:21');
 
 -- --------------------------------------------------------
 
@@ -308,17 +271,6 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `users`
---
-
-INSERT INTO `users` (`id`, `role`, `name`, `email`, `address`, `phone`, `password`, `remember_token`, `created_at`, `updated_at`, `email_verified_at`) VALUES
-(1, 'client', 'TEST123', 'TEST@gmail.com', 'Sousse', '23195210', '$2y$12$VecH0jtcddLY0RaZp2A2YuzkDMpx/lpYyXbpd2IGFFk/YIlW97e3m', NULL, '2025-05-01 19:02:40', '2025-05-01 19:02:40', NULL),
-(2, 'admin', 'admin', 'admin@gmail.com', 'Sousse', '23195210', '$2y$12$0MtV8dExuVoMdM7hhuDmkOvqRoDvXXamT49GJICstFAR2Abuylzey', NULL, '2025-05-01 19:03:07', '2025-05-03 20:05:47', NULL),
-(3, 'admin', 'gheyda', 'gheyda@gmail.com', 'Turkey', '23923570', '$2y$12$P8NEbqBHkj6R84lEjYLI/O5IWBPL2MZJ/RTSr178IcU40w2yTaf8G', NULL, '2025-05-01 19:09:53', '2025-05-01 19:09:53', NULL),
-(4, 'client', 'Amir Ben Abdallah', 'test123@gmail.com', 'Sousse', '2983012', '$2y$12$t6E5tZ1oE/JCTKSRVCV4oeJQUrhKeVt0MGoxRlvNZ723Zb7gdHY3i', NULL, '2025-05-02 10:47:52', '2025-05-03 21:37:30', NULL),
-(6, 'client', 'finalTestuser', 'finalTestuser@gmail.com', 'Gafsa', '12345678', '$2y$12$mbPhruGhSQspl7ZV2G7jGe3r8JVZTlGcp9woeP/KTs1Uma7otYFie', NULL, '2025-05-04 14:57:19', '2025-05-04 14:57:19', NULL);
 
 --
 -- Index pour les tables déchargées
