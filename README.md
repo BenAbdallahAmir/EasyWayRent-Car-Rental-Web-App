@@ -1,4 +1,6 @@
-# 🚗 EasyWayRent | Web App
+<h1 align="center">
+🚗 EasyWayRent | Web App
+</h1>
 
 ![Laravel](https://img.shields.io/badge/Laravel-v12-red?style=flat-square&logo=laravel)
 ![Angular](https://img.shields.io/badge/Angular-v19-DD0031?style=flat-square&logo=angular)
@@ -9,7 +11,21 @@ A full-stack car rental web application built with **Laravel 12** (REST API) and
 
 ---
 
-## 🌟 Features
+## 🗝️ Key Features
+
+-  Secure authentication with role-based access (client/admin)
+
+-  Real-time vehicle availability and status management
+
+-  Modular and scalable component-based architecture
+
+-  RESTful API communication between frontend and backend
+
+-  Integrated Bootstrap modals and Angular forms for CRUD operations
+
+---
+
+## 👤 User-Side Capabilities
 
 ### Front Office (Clients)
 - 🔐 User registration & login
@@ -56,17 +72,12 @@ A full-stack car rental web application built with **Laravel 12** (REST API) and
 
 ---
 
-## 🌐 Find Me Online
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/benabdallahamir)
-[![GitHub](https://img.shields.io/badge/GitHub-Profil-black?style=for-the-badge&logo=github)](https://github.com/BenAbdallahAmir)
-[![Behance](https://img.shields.io/badge/Behance-Portfolio-1769ff?style=for-the-badge&logo=behance)](https://www.behance.net/aba_artworks)
-
----
-
 ## 🖼️ Screenshots
 
-![App Screenshot](blob:https://web.whatsapp.com/04778618-9389-4fd5-94ba-7bee419e286a)
+![App Screenshot](https://github.com/BenAbdallahAmir/EasyWayRent-Car-Rental-Web-App/blob/ae298eb2f2d809f98dcdf3185f9ee698c30635d2/preview/home.png)
+![App Screenshot](https://github.com/BenAbdallahAmir/EasyWayRent-Car-Rental-Web-App/blob/ae298eb2f2d809f98dcdf3185f9ee698c30635d2/preview/about.png)
+
+
 
 ---
 
@@ -122,3 +133,11 @@ ng serve
   - GET /api/cars
 
   - POST /api/reservations
+
+---
+
+## 🌐 Catch Me on :
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/benabdallahamir)
+[![GitHub](https://img.shields.io/badge/GitHub-Profil-black?style=for-the-badge&logo=github)](https://github.com/BenAbdallahAmir)
+[![Behance](https://img.shields.io/badge/Behance-Portfolio-1769ff?style=for-the-badge&logo=behance)](https://www.behance.net/aba_artworks)
