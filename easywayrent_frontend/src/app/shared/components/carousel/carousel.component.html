@@ -1,0 +1,20 @@
+<div class="mx-auto pb-5 text-center mb-4" style="max-width: 900px;">
+  <h5 class="text-capitalize mb-3 text-primary">CAR CATEGORIES</h5>
+  <h3 class="mb-0 display-6">Categories tailored to your travel needs</h3>
+</div>
+<c-carousel transition="crossfade" class="carousel">
+  <c-carousel-inner>
+    <c-carousel-item *ngFor="let slide of slides" class="carousel-item">
+      <img [src]="slide.src" alt="{{slide.title}}" class="d-block w-100" loading="lazy"/>
+      <c-carousel-caption class="d-md-block">
+        <div class="caption-container text-center text-nowrap">
+          <h3 class="text-light display-5">{{slide.title}}</h3>
+          <p class="fs-6 text-info" routerLink="/cars">Load more <i class="ms-1 fa-duotone fa-solid fa-arrow-right"></i>
+          </p>
+        </div>
+      </c-carousel-caption>
+    </c-carousel-item>
+  </c-carousel-inner>
+  <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+  <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+</c-carousel>

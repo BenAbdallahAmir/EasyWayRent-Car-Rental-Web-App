@@ -1,0 +1,175 @@
+<!-- Header Start -->
+<header class="bg-breadcrumb">
+  <div class="container text-center py-5" style="max-width: 900px;">
+    <h4 class="text-white display-4 mb-4">Car details</h4>
+    <ol class="breadcrumb d-flex justify-content-center mb-0">
+      <li class="breadcrumb-item"><a routerLink="/cars" class="hover">Cars</a></li>
+      <li class="breadcrumb-item text-primary">Car details</li>
+    </ol>
+  </div>
+</header>
+<!-- Header End -->
+
+<div class="container my-5" *ngIf="car">
+  <div class="row">
+    <!-- Car Details Section -->
+    <div class="col-lg-7">
+      <div class="card shadow-lg">
+        <img [src]="car.image || 'assets/images/car-placeholder.jpg'" class="card-img-top" alt="{{ car.brand }} {{ car.model }}"
+          width="100%" height="400" style="object-fit: cover;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="card-title text-primary">{{ car.brand }} {{ car.model }}</h2>
+            <span class="badge"
+              [ngClass]="{'bg-success': car.status.toLowerCase() === 'available', 'bg-danger': car.status.toLowerCase() === 'rented'}">
+              {{ car.status === 'available' ? 'Available' : 'Rented' }}
+            </span>
+          </div>
+          <h4 class="mb-3"><span class="text-secondary fw-bold">{{ car.price_per_day }} DT</span> / day</h4>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h5 class="text-primary">Car details</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><strong>Category:</strong> {{ car.category?.name || 'N/A' }}</li>
+                <li class="mb-2"><strong>Brand:</strong> {{ car.brand }}</li>
+                <li class="mb-2"><strong>Model:</strong> {{ car.model }}</li>
+                <li class="mb-2"><strong>Year:</strong> {{ car.year }}</li>
+                <li class="mb-2"><strong>License plate:</strong> {{ car.license_plate }}</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <!-- <h5 class="text-dark">Caractéristiques</h5> -->
+              <ul class="list-unstyled">
+                <li class="mb-2"><strong></strong>&nbsp;</li>
+                <li class="mb-2"><strong>Seats:</strong> {{ car.passengers }}</li>
+                <li class="mb-2"><strong>Doors:</strong> {{ car.doors }}</li>
+                <li class="mb-2"><strong>Luggage:</strong> {{ car.luggage }} Kg</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-2" *ngIf="car.description">
+            <h5 class="text-primary">Description</h5>
+            <p>{{ car.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reservation Form Section -->
+    <div class="col-lg-5">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-center">
+          <h4 class="mb-0 text-white p-1">Book a car</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="reservationForm" (ngSubmit)="submitToCart()">
+            <!-- Date de début -->
+            <div class="mb-3">
+              <label for="start_date" class="form-label">Start date <span class="text-danger">*</span></label>
+              <input type="date" id="start_date" class="form-control" formControlName="start_date" [min]="minStartDate"
+                [ngClass]="{'is-invalid': reservationForm.get('start_date')?.invalid && reservationForm.get('start_date')?.touched}">
+              <div class="invalid-feedback"
+                *ngIf="reservationForm.get('start_date')?.invalid && reservationForm.get('start_date')?.touched">
+                Start date is required
+              </div>
+            </div>
+
+            <!-- Date de fin -->
+            <div class="mb-3">
+              <label for="end_date" class="form-label">End date <span class="text-danger">*</span></label>
+              <input type="date" id="end_date" class="form-control" formControlName="end_date" [min]="minEndDate"
+                [ngClass]="{'is-invalid': reservationForm.get('end_date')?.invalid && reservationForm.get('end_date')?.touched}">
+              <div class="invalid-feedback"
+                *ngIf="reservationForm.get('end_date')?.invalid && reservationForm.get('end_date')?.touched">
+                End date is required
+              </div>
+            </div>
+
+            <!-- Lieu de prise en charge -->
+            <div class="mb-3">
+              <label for="pickup_location" class="form-label">Pickup location <span
+                  class="text-danger">*</span></label>
+              <input type="text" id="pickup_location" class="form-control" formControlName="pickup_location"
+                placeholder="Full address"
+                [ngClass]="{'is-invalid': reservationForm.get('pickup_location')?.invalid && reservationForm.get('pickup_location')?.touched}">
+              <div class="invalid-feedback"
+                *ngIf="reservationForm.get('pickup_location')?.invalid && reservationForm.get('pickup_location')?.touched">
+                Pickup location is required
+              </div>
+            </div>
+
+            <!-- Lieu de restitution -->
+            <div class="mb-3">
+              <label for="dropoff_location" class="form-label">Drop-off location <span
+                  class="text-danger">*</span></label>
+              <input type="text" id="dropoff_location" class="form-control" formControlName="dropoff_location"
+                placeholder="Full address"
+                [ngClass]="{'is-invalid': reservationForm.get('dropoff_location')?.invalid && reservationForm.get('dropoff_location')?.touched}">
+              <div class="invalid-feedback"
+                *ngIf="reservationForm.get('dropoff_location')?.invalid && reservationForm.get('dropoff_location')?.touched">
+                Drop-off location is required
+              </div>
+            </div>
+
+            <!-- Méthode de paiement -->
+            <div class="mb-3">
+              <label for="payment_method" class="form-label">Payment method <span
+                  class="text-danger">*</span></label>
+              <select id="payment_method" class="form-select" formControlName="payment_method"
+                [ngClass]="{'is-invalid': reservationForm.get('payment_method')?.invalid && reservationForm.get('payment_method')?.touched}">
+                <option value="credit_card">Credit card</option>
+                <option value="paypal">PayPal</option>
+                <option value="cash">Cash</option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="reservationForm.get('payment_method')?.invalid && reservationForm.get('payment_method')?.touched">
+                Payment method is required
+              </div>
+            </div>
+
+            <!-- Résumé de la réservation -->
+            <div class="card bg-light mt-4 mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Reservation Summary</h5>
+                <div class="d-flex justify-content-between">
+                  <span>Price per day:</span>
+                  <span>{{ car.price_per_day }} DT</span>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <span>Total:</span>
+                  <span class="fw-bold">{{ totalPrice }} DT</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" class="btn btn-primary w-100" (click)="submitToCart()"
+              [disabled]="reservationForm.invalid || loading || car.status.toLowerCase() !== 'available'">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ car.status.toLowerCase() === 'available' ? 'Add to Cart' : 'Car not available' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading spinner -->
+<div class="container my-5 text-center" *ngIf="!car && loading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <p class="mt-3">Loading car details...</p>
+</div>
+
+<!-- Error message -->
+<div class="container my-5 text-center" *ngIf="!car && !loading">
+  <div class="alert alert-danger">
+    <h4>Car not found</h4>
+    <p>La voiture que vous recherchez n'est pas disponible ou n'existe pas.</p>
+    <button class="btn btn-primary mt-3" routerLink="/cars">Back to cars list</button>
+  </div>
+</div>

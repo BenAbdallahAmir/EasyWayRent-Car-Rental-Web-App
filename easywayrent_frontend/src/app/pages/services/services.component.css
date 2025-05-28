@@ -1,0 +1,27 @@
+.service-item {
+    height: 320px;
+    background: var(--bs-light);
+    transition: .5s;
+    border-radius:1.3em;
+    transition: all ease-in-out .6s;
+}
+
+.service-item:hover,
+.service-item.active {
+    background: var(--bs-secondary);
+}
+
+.service-item h1,
+.service-item h4 {
+    transition: .5s;
+}
+
+.service-item:hover h1,
+.service-item.active h1 {
+    color: var(--bs-light) !important;
+}
+
+.service-item:hover h4,
+.service-item.active h4 {
+    color: var(--bs-light);
+}

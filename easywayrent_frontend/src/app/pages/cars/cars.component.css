@@ -1,0 +1,43 @@
+.item_filter_group{
+  border: 1px solid #cccccc79;
+}
+.item-1 .item-1-contents {
+  padding: 1.3em;
+   }
+   .item-1{
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+   }
+   .item-1-contents,.item-1{
+      border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+   }
+  .item-1 .item-1-contents h3 {
+    font-size: 1.7rem; }
+  .item-1 .item-1-contents .rent-price > span {
+    font-size: 1.5rem; }
+  .item-1 .item-1-contents ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; }
+    .item-1 .item-1-contents ul li {
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #cac9c9b2;
+      display: block;
+      position: relative; }
+      .item-1 .item-1-contents ul li .spec {
+        position: absolute;
+        right: 0; }
+      .item-1 .item-1-contents ul li:last-child {
+        border-bottom: none; }
+  .item-1 .item-1-contents .action {
+    margin-top: 1em; }
+    .img-fluid{
+      border-top-left-radius: 1em;
+      border-top-right-radius: 1em;
+      transition: all 0.3s ease-in-out;
+    }
+    .img-fluid:hover{
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.276);
+    }

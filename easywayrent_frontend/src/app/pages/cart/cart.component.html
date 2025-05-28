@@ -1,0 +1,150 @@
+<!-- Header Start -->
+<header class="bg-breadcrumb">
+  <div class="container text-center py-5" style="max-width: 900px;">
+    <h4 class="text-white display-4 mb-4">My Cart</h4>
+    <ol class="breadcrumb d-flex justify-content-center mb-0">
+      <li class="breadcrumb-item"><a routerLink="/cars" class="hover">Cars</a></li>
+      <li class="breadcrumb-item text-primary">Cart</li>
+    </ol>
+  </div>
+</header>
+<!-- Header End -->
+
+<div class="container my-5">
+  <!-- Loading Spinner -->
+  <div class="text-center my-5" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3">Loading your cart...</p>
+  </div>
+
+  <div class="text-center my-5" *ngIf="!loading && isCartEmpty()">
+    <div class="alert alert-secondary">
+      <h4>Your cart is empty</h4>
+      <p>Browse our collection of cars and add some to your cart.</p>
+      <button class="btn btn-primary mt-3" routerLink="/cars">Browse Cars</button>
+    </div>
+  </div>
+
+  <!-- Cart Items List -->
+  <div *ngIf="!loading && cartItems && cartItems.length > 0">
+    <h2 class="mb-4">Your Cart ({{ cartItems.length }} {{ cartItems.length === 1 ? 'item' : 'items' }})</h2>
+
+    <div class="row">
+      <!-- Cart Items -->
+      <div class="col-lg-12">
+        <div class="card shadow-lg mb-4" *ngFor="let item of cartItems">
+          <div class="card-body">
+            <div class="row">
+              <!-- Car Image -->
+              <div class="col-md-3">
+                <img [src]="getFullImageUrl(item.car?.image || '')" class="img-fluid rounded"
+                  alt="{{ item.car?.brand }} {{ item.car?.model }}"
+                  onerror="this.src='assets/images/car-placeholder.jpg'; this.onerror=null;">
+              </div>
+              <!-- Car Details -->
+              <div class="col-md-6">
+                <h5 class="card-title text-primary">{{ item.car?.brand }} {{ item.car?.model }}</h5>
+                <div class="d-flex gap-5">
+                  <div>
+                    <p class="card-text mb-1"><strong>Price per day:</strong> {{ item.car?.price_per_day }} DT</p>
+                    <p class="card-text mb-1"><strong>From:</strong> {{ item.start_date | date: 'mediumDate' }}</p>
+                    <p class="card-text mb-1"><strong>Pickup:</strong> {{ item.pickup_location }}</p>
+
+                  </div>
+                  <div>
+                    <p class="card-text mb-1"><strong>Total:</strong> <span
+                        class="text-primary fw-bold">{{ item.total_price }}
+                        DT</span>
+                    </p>
+                    <p class="card-text mb-1"><strong>To:</strong> {{ item.end_date | date: 'mediumDate' }}</p>
+
+                    <p class="card-text mb-1"><strong>Drop-off:</strong> {{ item.dropoff_location }}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Actions -->
+              <div class="col-md-3 d-flex flex-column justify-content-center">
+                <button class="btn btn-outline-primary mb-2" (click)="editCartItem(item)">Edit</button>
+                <button class="btn btn-outline-danger" (click)="removeFromCart(item.id)">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div>
+      <div>
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div class="d-flex justify-content-between mb-3">
+            <span>Subtotal ({{ cartItems.length }} {{ cartItems.length === 1 ? 'item' : 'items' }}):</span>
+            <span>{{ calculateSubtotal() }} DT</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-3">
+            <span class="fw-bold">Total:</span>
+            <span class="fw-bold text-primary">{{ calculateSubtotal() }} DT</span>
+          </div>
+        </div>
+        <div class="text-center my-5">
+          <button class="btn btn-primary w-lg-25 w-md-50 text-nowrap" (click)="checkout()">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Cart Item Modal -->
+<div class="modal fade" id="editCartModal" tabindex="-1" aria-labelledby="editCartModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="selectedCartItem">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editCartModalLabel">Edit Rental Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editCartForm">
+          <div class="mb-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" formControlName="start_date" [min]="minStartDate">
+            <div class="invalid-feedback"
+              *ngIf="editCartForm.get('start_date')?.invalid && editCartForm.get('start_date')?.touched">
+              Start date is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="end_date" formControlName="end_date" [min]="minEndDate">
+            <div class="invalid-feedback"
+              *ngIf="editCartForm.get('end_date')?.invalid && editCartForm.get('end_date')?.touched">
+              End date is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="pickup_location" class="form-label">Pickup Location</label>
+            <input type="text" class="form-control" id="pickup_location" formControlName="pickup_location">
+            <div class="invalid-feedback"
+              *ngIf="editCartForm.get('pickup_location')?.invalid && editCartForm.get('pickup_location')?.touched">
+              Pickup location is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dropoff_location" class="form-label">Drop-off Location</label>
+            <input type="text" class="form-control" id="dropoff_location" formControlName="dropoff_location">
+            <div class="invalid-feedback"
+              *ngIf="editCartForm.get('dropoff_location')?.invalid && editCartForm.get('dropoff_location')?.touched">
+              Drop-off location is required
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="updateCartItem()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>

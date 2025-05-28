@@ -1,0 +1,52 @@
+/* From Uiverse.io by narmesh_sah */
+.profile-card {
+  position: relative;
+  width: 320px;
+  background: linear-gradient(rgba(250, 252, 255, 0.9), rgba(237, 243, 255, 0.9));
+  -webkit-backdrop-filter: blur(48px);
+  backdrop-filter: blur(48px);
+  border-radius: 1em;
+  padding: 2rem;
+  transform: perspective(1000px) scale(0.8);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-in-out;
+}
+.profile-card:hover{
+    box-shadow: 7px 7px 7px 1px rgba(0, 0, 0, 0.074);
+    scale: 1.02;
+}
+
+.profile-image {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background-color: #f0f2f5;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  border: 3px solid white;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-image::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 6rem;
+  background-color: var(--bs-secondary);
+  border-radius: 20px 20px 0 0;
+  z-index: -1;
+}
+
+
+
+
+
+
+
+
+
+

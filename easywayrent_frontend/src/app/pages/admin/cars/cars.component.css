@@ -1,0 +1,67 @@
+/* General styles for .item-1 */
+.item-1 {
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  overflow: hidden; /* Added to ensure content doesn't spill out */
+}
+
+/* Contents inside .item-1 */
+.item-1 .item-1-contents {
+  padding: 1.3em;
+}
+
+/* Styling for headings inside .item-1-contents */
+.item-1 .item-1-contents h3 {
+  font-size: 1.7rem;
+}
+
+/* Rent price styling */
+.item-1 .item-1-contents .rent-price > span {
+  font-size: 1.5rem;
+}
+
+/* List inside .item-1-contents */
+.item-1 .item-1-contents ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-1 .item-1-contents ul li {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #cac9c9b2;
+  display: block;
+  position: relative;
+}
+
+/* Spec position inside each list item */
+.item-1 .item-1-contents ul li .spec {
+  position: absolute;
+  right: 0;
+}
+
+/* Remove border from the last list item */
+.item-1 .item-1-contents ul li:last-child {
+  border-bottom: none;
+}
+
+/* Action section inside .item-1-contents */
+.item-1 .item-1-contents .action {
+  margin-top: 1em;
+}
+
+/* Styling for images */
+.img-fluid {
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effects for images */
+.img-fluid:hover {
+  transform: translateY(-5%);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.305);
+}

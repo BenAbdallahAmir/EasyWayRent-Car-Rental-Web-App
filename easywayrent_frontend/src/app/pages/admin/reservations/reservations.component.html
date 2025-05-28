@@ -1,0 +1,94 @@
+<!-- Header Start -->
+<header class="bg-breadcrumb">
+  <div class="container text-center py-5" style="max-width: 900px;">
+    <h4 class="text-white display-4 mb-4">{{ isAdmin ? 'Reservations Management' : 'My Reservations' }}</h4>
+    <ol class="breadcrumb d-flex justify-content-center mb-0">
+      <li class="breadcrumb-item"><a routerLink="/{{ isAdmin ? 'admin' : 'dashboard' }}" class="hover">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item text-primary">{{ isAdmin ? 'Reservations Management' : 'My Reservations' }}</li>
+    </ol>
+  </div>
+</header>
+<!-- Header End -->
+
+<div class="container my-5">
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show">
+    {{ successMessage }}
+    <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+  </div>
+
+  <div *ngIf="loading" class="d-flex justify-content-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && reservations.length === 0" class="alert alert-info">
+    No reservations found.
+  </div>
+
+  <div *ngIf="!loading && reservations.length > 0" class="table-responsive">
+    <table class="table table-hover table-striped-columns">
+      <thead>
+        <tr class="table-primary">
+          <th *ngIf="isAdmin">Client</th>
+          <th>Car</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Pickup Location</th>
+          <th>Dropoff Location</th>
+          <th>Total Price (DT)</th>
+          <th>Payment Method</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let res of reservations">
+          <td *ngIf="isAdmin">{{ res.user?.name || 'N/A' }}</td>
+          <td>{{ res.car?.model || 'N/A' }}</td>
+          <td>{{ res.start_date | date:'mediumDate' }}</td>
+          <td>{{ res.end_date | date:'mediumDate' }}</td>
+          <td>{{ res.pickup_location }}</td>
+          <td>{{ res.dropoff_location }}</td>
+          <td>{{ res.total_price }}</td>
+          <td>{{ res.payment_method | titlecase }}</td>
+          <td>
+            <span [ngClass]="{
+              'badge bg-warning': res.status === 'pending',
+              'badge bg-success': res.status === 'confirmed',
+              'badge bg-danger': res.status === 'cancelled',
+              'badge bg-secondary': res.status === 'completed'
+            }">{{ res.status | titlecase }}</span>
+
+            <select *ngIf="isAdmin" class="form-select form-select-sm mt-1"
+              (change)="updateStatus(res.id, $any($event.target).value)"
+              [disabled]="res.status === 'cancelled' || res.status === 'completed'">
+              <option [value]="res.status" selected>Change Status</option>
+              <option *ngIf="res.status !== 'pending'" value="pending">Pending</option>
+              <option *ngIf="res.status !== 'confirmed'" value="confirmed">Confirmed</option>
+              <option *ngIf="res.status !== 'cancelled'" value="cancelled">Cancelled</option>
+              <option *ngIf="res.status !== 'completed'" value="completed">Completed</option>
+            </select>
+          </td>
+          <td>
+            <div class="d-flex gap-2">
+              <button *ngIf="!isAdmin && res.status === 'pending'" class="btn btn-sm btn-danger"
+                (click)="cancelReservation(res.id)">
+                Cancel
+              </button>
+              <button *ngIf="isAdmin" class="btn btn-sm btn-danger" (click)="deleteReservation(res.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

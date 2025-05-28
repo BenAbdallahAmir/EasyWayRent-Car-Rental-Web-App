@@ -1,0 +1,141 @@
+<div class="dashboard-container">
+  <h1 class="dashboard-title display-1">Dashboard</h1>
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading data...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="ag-format-container">
+    <div class="ag-courses_box">
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Available Cars
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ availableCars }}</div>
+            <div class="stat-subtitle">out of {{ totalCars }} total</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Active Reservations
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ activeReservations }}</div>
+            <div class="stat-subtitle">out of {{ totalReservations }} total</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Total Revenue
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ formatCurrency(completedRevenue) }} DT</div>
+            <div class="stat-subtitle">since launch</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Registered Clients
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ totalUsers }}</div>
+            <div class="stat-subtitle">active users</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Completed Reservations
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ completedReservations }}</div>
+            <div class="stat-subtitle">completed successfully</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Total Categories
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ totalCategories }}</div>
+            <div class="stat-subtitle">vehicle types</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Pending Reservations
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ pendingReservations }}</div>
+            <div class="stat-subtitle">awaiting approval</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Administrators
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ totalAdmins }}</div>
+            <div class="stat-subtitle">system admins</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 12: Most Popular Category -->
+      <div class="ag-courses_item">
+        <div class="ag-courses-item_link">
+          <div class="ag-courses-item_bg"></div>
+          <div class="ag-courses-item_title">
+            Popular Category
+          </div>
+          <div class="ag-courses-item_date-box">
+            <div class="stat-value">{{ mostPopularCategory }}</div>
+            <div class="stat-subtitle">most rented vehicle type</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Refresh button -->
+  <div class="refresh-container">
+    <button (click)="loadDashboardData()" class="btn btn-primary rounded-pill">
+      Refresh Data
+    </button>
+  </div>
+</div>

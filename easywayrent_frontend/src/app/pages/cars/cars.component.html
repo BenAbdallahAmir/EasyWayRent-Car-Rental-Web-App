@@ -1,0 +1,109 @@
+<!--Header Start-->
+<app-cars-header></app-cars-header>
+<!--Header End-->
+
+<!--Filters Start-->
+<div class="container-fluid bg-light py-3 my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-dark">Filters</h4>
+      </div>
+      <div class="col-md-6 text-end">
+        <button type="button" class="btn btn-primary btn-sm" (click)="applyFilters()">Apply filters</button>
+      </div>
+    </div>
+    <div class="row mt-3 d-flex justify-content-between">
+      <div class="col-4">
+        <label for="brandFilter" class="form-label">Brand</label>
+        <select id="brandFilter" class="form-select form-select-sm" [(ngModel)]="selectedBrand">
+          <option value="All">All</option>
+          <option *ngFor="let brand of uniqueBrands" [value]="brand">{{ brand }}</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <label for="statusFilter" class="form-label">Status</label>
+        <select id="statusFilter" class="form-select form-select-sm" [(ngModel)]="selectedStatus">
+          <option value="All">All</option>
+          <option value="Available">Available</option>
+          <option value="Rented">Rented</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <label for="priceFilter" class="form-label">Price</label>
+        <select id="priceFilter" class="form-select form-select-sm" [(ngModel)]="selectedPriceOrder">
+          <option value="All">All</option>
+          <option value="Low to High Price">Low to high</option>
+          <option value="High to Low Price">High to low</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Filters End-->
+
+<!--CarsList Start-->
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div *ngIf="filteredCars.length === 0" class="col-12 text-center my-5">
+        <h6 class="text-muted">No cars available with the selected filters</h6>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4" *ngFor="let car of filteredCars">
+        <div class="item-1 shadow-lg">
+          <div class="car-image-container">
+            <img [src]="car.image || 'https://musee-possen.lu/wp-content/uploads/2020/08/placeholder.png'"
+              alt="car-image" class="car-image" loading="lazy" (error)="onImageError($event)">
+          </div>
+          <div class="item-1-contents bg-light">
+            <div class="text-center">
+              <h3 class="text-primary fw-bolder">{{ car.model }}</h3>
+              <div class="rent-price"><span class="text-secondary fw-bold">{{ car.price_per_day }} DT/</span>day</div>
+            </div>
+            <ul class="specs">
+              <li>
+                <span>Category</span>
+                <span class="spec">{{ car.category_name || car.category?.name || 'Not assigned' }}</span>
+              </li>
+              <li>
+                <span>Brand</span>
+                <span class="spec">{{ car.brand }}</span>
+              </li>
+              <li>
+                <span>Year</span>
+                <span class="spec">{{ car.year }}</span>
+              </li>
+              <li>
+                <span>Seats</span>
+                <span class="spec">{{ car.passengers }}</span>
+              </li>
+              <li>
+                <span>Doors</span>
+                <span class="spec">{{ car.doors }}</span>
+              </li>
+              <li>
+                <span>Luggage</span>
+                <span class="spec">{{ car.luggage }} Kg</span>
+              </li>
+              <li>
+                <span>Status</span>
+                <span class="spec"
+                  [ngClass]="{'text-primary fw-bold': car.status.toLowerCase() === 'available', 'text-danger fw-bold': car.status.toLowerCase() === 'rented'}">
+                  {{ car.status === 'available' ? 'Available' : 'Rented' }}
+                </span>
+              </li>
+            </ul>
+            <div class="d-flex action">
+              <button (click)="rentNow(car.id)" class="btn btn-primary rounded-pill"
+                [disabled]="car.status.toLowerCase() !== 'available'">
+                {{ car.status.toLowerCase() === 'available' ? 'Rent now' : 'Rented' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--CarsList End-->

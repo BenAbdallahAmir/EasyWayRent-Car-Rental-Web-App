@@ -1,0 +1,23 @@
+/* Style pour les sélecteurs de statut */
+.form-select-sm {
+  width: auto;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Style pour les boutons d'action */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Espacement entre les boutons */
+.d-flex.gap-2 {
+  gap: 0.5rem;
+}
+
+/* Style pour les lignes annulées ou complétées */
+tr.disabled-row {
+  opacity: 0.6;
+  background-color: #f8f9fa;
+}

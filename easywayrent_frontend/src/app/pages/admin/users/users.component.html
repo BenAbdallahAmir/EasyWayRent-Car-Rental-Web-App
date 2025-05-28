@@ -1,0 +1,225 @@
+<!-- Header Start -->
+<header class="bg-breadcrumb">
+  <div class="container text-center py-5" style="max-width: 900px;">
+    <h4 class="text-white display-4 mb-4">Users management</h4>
+    <ol class="breadcrumb d-flex justify-content-center mb-0">
+      <li class="breadcrumb-item"><a routerLink="/admin" class="hover">Dashboard</a></li>
+      <li class="breadcrumb-item text-primary">Users management</li>
+    </ol>
+  </div>
+</header>
+<!-- Header End -->
+
+
+<!-- <div class="container py-5">
+  <div class="row">
+    <div class="profile-card col-md-4 mb-4" *ngFor="let user of users">
+      <div class="profile-image">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"></circle>
+            <path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20" stroke="#1C274C"
+              stroke-width="1.5" stroke-linecap="round"></path>
+            <path
+              d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"
+              stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path>
+          </g>
+        </svg>
+      </div>
+      <div class="profile-info mb-2">
+        <p class="profile-name text-center text-secondary mb-1 fw-semibold fs-4">{{ user.name }}</p>
+        <div class="profile-title mb-2 fs-6 text-center text-info-emphasis">{{ user.role }}</div>
+        <div class="text-start fw-bold text-dark">
+          <p><span class="fw-light text-dark">Email: </span>{{ user.email }}</p>
+          <p><span class="fw-light text-dark">Phone: </span>{{ user.phone }}</p>
+          <p><span class="fw-light text-dark">Address: </span>{{ user.address }}</p>
+        </div>
+      </div>
+      <hr>
+      <div class="d-flex gap-3 justify-content-center">
+        <button class="btn btn-primary" title="Edit">
+          <i class="fa-solid fa-user-pen"></i>
+        </button>
+        <button class="btn btn-primary" title="Delete">
+          <i class="fa-solid fa-user-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+<!-- Success and Error Messages -->
+<div class="container mt-3">
+  <div *ngIf="successMessage" class="alert alert-success text-center">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+</div>
+
+<!-- Filter Controls -->
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="filter-buttons">
+      <button class="btn btn-outline-primary me-2" [class.active]="currentFilter === 'all'"
+        (click)="filterUsers('all')">
+        All Users
+      </button>
+      <button class="btn btn-outline-success me-2" [class.active]="currentFilter === 'admin'"
+        (click)="filterUsers('admin')">
+        Administrators
+      </button>
+      <button class="btn btn-outline-danger" [class.active]="currentFilter === 'client'"
+        (click)="filterUsers('client')">
+        Clients
+      </button>
+    </div>
+    <button class="btn btn-primary rounded-pill px-4" (click)="openAddUserModal()" data-bs-toggle="modal"
+      data-bs-target="#userModal">
+      Add user<i class="fa-solid fa-plus ms-2"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Loading Indicator -->
+<div *ngIf="loading" class="d-flex justify-content-center my-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Users Grid -->
+<div class="container py-5" *ngIf="!loading">
+  <div class="row">
+    <div *ngIf="users.length === 0" class="text-center w-100">
+      <p class="text-muted">No users found</p>
+    </div>
+
+    <div class="profile-card col-md-4 mb-4" *ngFor="let user of users">
+      <div class="profile-image">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"></circle>
+            <path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20"
+              stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path>
+            <path
+              d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"
+              stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path>
+          </g>
+        </svg>
+      </div>
+      <div class="profile-info mb-2">
+        <p class="profile-name text-center text-secondary mb-1 fw-semibold fs-4">{{ user.name }}</p>
+        <div class="profile-title mb-2 fs-6 text-center"
+          [ngClass]="{'text-primary': user.role === 'admin', 'text-info': user.role === 'client'}">
+          {{ user.role | titlecase }}
+        </div>
+        <div class="text-start fw-bold text-dark">
+          <p><span class="fw-light text-dark">Email: </span>{{ user.email }}</p>
+          <p><span class="fw-light text-dark">Phone: </span>{{ user.phone }}</p>
+          <p><span class="fw-light text-dark">Address: </span>{{ user.address }}</p>
+        </div>
+      </div>
+      <hr>
+      <div class="d-flex gap-3 justify-content-center">
+        <button class="btn btn-primary" title="Edit" (click)="openEditUserModal(user)" data-bs-toggle="modal"
+          data-bs-target="#userModal">
+          <i class="fa-solid fa-user-pen"></i>
+        </button>
+
+        <button *ngIf="user.role === 'client'" class="btn btn-success" title="Promote to admin"
+          (click)="promoteToAdmin(user.id)">
+          <i class="fa-solid fa-user-plus"></i>
+        </button>
+
+        <button class="btn btn-danger" title="Delete" (click)="deleteUser(user.id)">
+          <i class="fa-solid fa-user-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Modal (Add/Edit) -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ isEditMode ? 'Edit User' : 'Add New User' }}</h5>
+        <button type="button" id="closeUserModal" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+        <div class="modal-body">
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" formControlName="name" class="form-control" placeholder="Full name">
+            <small class="text-danger" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+              Name is required (min 3 characters)
+            </small>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" formControlName="email" class="form-control" placeholder="Email address">
+            <small class="text-danger" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+              Valid email is required
+            </small>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="tel" formControlName="phone" class="form-control" placeholder="Phone number">
+            <small class="text-danger" *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched">
+              Valid phone number is required
+            </small>
+          </div>
+
+          <!-- Address -->
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" formControlName="address" class="form-control" placeholder="Address">
+            <small class="text-danger" *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched">
+              Address is required
+            </small>
+          </div>
+
+          <!-- Password (required for new users, optional for edit) -->
+          <div class="mb-3">
+            <label class="form-label">
+              Password {{ isEditMode ? '(Leave blank to keep unchanged)' : '' }}
+            </label>
+            <input type="password" formControlName="password" class="form-control" placeholder="Password">
+            <small class="text-danger" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+              Password must be at least 6 characters
+            </small>
+          </div>
+
+          <!-- Role -->
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select formControlName="role" class="form-select">
+              <option value="client">Client</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isEditMode ? 'Update' : 'Save' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

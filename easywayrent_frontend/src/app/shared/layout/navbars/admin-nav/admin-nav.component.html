@@ -1,0 +1,50 @@
+<!-- Navbar Start -->
+<nav class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0 shadow-sm">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between align-items-center">
+      <a routerLink="/admin" class="navbar-brand p-0">
+        <h1 class="display-6 fs-2 fw-medium"><i
+            class="fa-sharp-duotone fa-solid fa-car-tunnel me-2 text-primary"></i>EasyWayRent
+        </h1>
+      </a>
+
+      <!-- Avatar toujours visible -->
+      <li class="nav-item dropdown d-flex align-items-center order-1 order-lg-3 ms-auto me-2">
+        <a class="nav-link d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img
+            src="https://img.freepik.com/psd-gratuit/illustration-3d-personne-lunettes-soleil_23-2149436188.jpg?t=st=1744564077~exp=1744567677~hmac=eecca8a77eef4e3bd7dcf5e769eb46591fc00e73437a573415cdb63d3d48ec19&w=740"
+            alt="User Avatar">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li *ngIf="currentUser" class="fw-medium text-center text-primary">{{ currentUser.name }}</li>
+          <li *ngIf="!currentUser" class="fw-medium text-center text-primary">
+            <a routerLink="/login" class="dropdown-item">Login</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" routerLink="/admin/profile">Profile</a></li>
+          <li><a class="dropdown-item" (click)="onLogout()">Logout</a></li>
+        </ul>
+      </li>
+
+      <!-- Burger menu -->
+      <button class="navbar-toggler order-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+      </button>
+
+      <!-- Menu de navigation principal -->
+      <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarCollapse">
+        <div class="navbar-nav mx-auto py-0">
+          <a routerLink="/admin/dashboard" class="nav-item nav-link" routerLinkActive="active">Dashboard</a>
+          <a routerLink="/admin/cars" class="nav-item nav-link" routerLinkActive="active">Cars</a>
+          <a routerLink="/admin/categories" class="nav-item nav-link" routerLinkActive="active">Categories</a>
+          <a routerLink="/admin/reservations" class="nav-item nav-link" routerLinkActive="active">Reservations</a>
+          <a routerLink="/admin/users" class="nav-item nav-link" routerLinkActive="active">Users</a>
+          <!-- <a routerLink="/contact" class="nav-item nav-link" routerLinkActive="active">Contact</a> -->
+        </div>
+      </div>
+    </nav>
+  </div>
+</nav>
+<!-- Navbar End -->

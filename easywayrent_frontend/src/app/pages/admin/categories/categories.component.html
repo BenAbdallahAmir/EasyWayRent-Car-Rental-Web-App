@@ -1,0 +1,112 @@
+<!-- Header Start -->
+<header class="bg-breadcrumb">
+  <div class="container text-center py-5" style="max-width: 900px;">
+    <h4 class="text-white display-4 mb-4">Categories management</h4>
+    <ol class="breadcrumb d-flex justify-content-center mb-0">
+      <li class="breadcrumb-item"><a routerLink="/admin" class="hover">Dashboard</a></li>
+      <li class="breadcrumb-item text-primary">Categories management</li>
+    </ol>
+  </div>
+</header>
+<!-- Header End -->
+<div class="text-center">
+  <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+    Add category<i class="fa-solid fa-plus ms-2"></i>
+  </button>
+</div>
+
+<div class="container py-4">
+  <div class="row">
+    <div *ngIf="categories.length === 0" class="text-center py-4">
+      <p class="text-muted">No category added yet</p>
+    </div>
+    <div class="parent col-md-4 mb-4" *ngFor="let cat of categories">
+      <div class="card">
+      <div class="content-box">
+        <span class="card-title">{{ cat.name }}</span>
+        <div class="card-content">
+        <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#updateCategoryModal"
+          (click)="updateCategory(cat)">
+          Edit
+        </button>
+        <button class="btn btn-outline-primary" (click)="deleteCategory(cat.id)">
+          Delete
+        </button>
+        </div>
+      </div>
+      <div class="cars-box">
+        <span class="cars">CARS</span>
+        <span class="count">{{ cat.cars_count }}</span>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- ADD CATEGORY MODAL -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form [formGroup]="addCatForm" (ngSubmit)="addCat()">
+        <div class="modal-body row">
+          <div class="mb-3">
+            <label>Category name</label>
+            <input type="text" formControlName="name" class="form-control w-100" minlength="3" />
+            <p *ngIf="addCatForm.controls['name'].touched && addCatForm.controls['name'].invalid" class="text-danger">Invalid
+              category name</p>
+          </div>
+          <div *ngIf="successMessage" class="alert alert-success my-3 text-center">
+            {{ successMessage }}
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger my-3 text-center">
+            {{ errorMessage }}
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center text-center">
+          <button type="submit" class="btn btn-primary w-50" [disabled]="addCatForm.invalid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE CATEGORY MODAL -->
+<div class="modal fade" id="updateCategoryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form [formGroup]="updateCatForm" (ngSubmit)="submitUpdate()">
+        <div class="modal-body row">
+          <div class="mb-3">
+            <label>Category name</label>
+            <input type="text" formControlName="name" class="form-control w-100" minlength="3" />
+            <p *ngIf="addCatForm.controls['name'].touched && addCatForm.controls['name'].invalid" class="text-danger">Invalid
+              category name</p>
+          </div>
+          <div *ngIf="successMessage" class="alert alert-success my-3 text-center">
+            {{ successMessage }}
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger my-3 text-center">
+            {{ errorMessage }}
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center text-center">
+          <button type="submit" class="btn btn-primary w-50" [disabled]="updateCatForm.invalid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

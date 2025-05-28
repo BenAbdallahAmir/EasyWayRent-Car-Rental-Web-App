@@ -1,0 +1,13 @@
+li{
+  text-decoration: none;
+  list-style: none;
+}
+img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+
+

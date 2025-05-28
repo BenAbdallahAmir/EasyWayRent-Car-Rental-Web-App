@@ -1,0 +1,99 @@
+<!-- Header Start -->
+<header class="container-fluid bg-breadcrumb">
+  <div class="container text-center py-5" style="max-width: 900px;">
+    <h4 class="text-white display-4 mb-4 ">Register</h4>
+    <ol class="breadcrumb d-flex justify-content-center mb-0">
+      <li class="breadcrumb-item"><a routerLink="/home" class="hover">Home</a></li>
+      <li class="breadcrumb-item active text-primary disabled">Register</li>
+    </ol>
+  </div>
+</header>
+<!-- Header End -->
+
+
+<section class="ftco-section contact-section">
+  <div class="text-center mx-auto pt-5 my-5" style="max-width: 800px;">
+    <h3 class="text-primary mb-2">Create account</h3>
+    <p class="mb-0">
+      Please fill the input below here.
+    </p>
+  </div>
+  <div class="container">
+    <form (ngSubmit)="onRegister()" [formGroup]="registerForm" class="mb-5 w-75 mx-auto">
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label for="fullname">Full name</label>
+          <input id="fullname" formControlName="name" class="form-control" required />
+          <div *ngIf="registerForm.controls['name'].touched && registerForm.controls['name'].invalid" class="inputErr">
+            Full name is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" class="form-control" required />
+          <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors?.['required']"
+            class="inputErr">
+            Email is required.
+          </div>
+          <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors?.['email']"
+            class="inputErr">
+            Please enter a valid email address.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone">Phone</label>
+          <input id="phone" formControlName="phone" class="form-control" required />
+          <div *ngIf="registerForm.controls['phone'].touched && registerForm.controls['phone'].invalid"
+            class="inputErr">
+            Phone number is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address">Address</label>
+          <input id="address" formControlName="address" class="form-control" required />
+          <div *ngIf="registerForm.controls['address'].touched && registerForm.controls['address'].invalid"
+            class="inputErr">
+            Address is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password">Password</label>
+          <input id="password" type="password" formControlName="password" class="form-control" required />
+          <div
+            *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.['required']"
+            class="inputErr">
+            Password is required.
+          </div>
+          <div
+            *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.['minlength']"
+            class="inputErr">
+            Password must be at least characters long.
+          </div>
+        </div>
+
+        <div class="d-flex flex-column">
+          <button type="submit" class="btn btn-primary my-2 w-50 mx-auto"
+            [disabled]="registerForm.invalid || isSubmitting">
+            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status"
+              aria-hidden="true"></span>
+            {{ isSubmitting ? 'Registering...' : 'Register' }}
+          </button>
+          <p class="text-center text-muted">Already have an account?
+            <a class="text-primary hover" routerLink="/login">Login</a>
+          </p>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger my-3 text-center">
+          {{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success my-3 text-center">
+          {{ successMessage }}
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+.abt-item{
+  transition: all .3s ease-in-out;
+}
+.abt-item-container:hover .abt-item {
+  scale: 1.02;
+  cursor: default;
+  background-color: var(--bs-secondary) !important;
+}
+.abt-item-container:hover .abt-item h4,
+.abt-item-container:hover .abt-item p {
+  color: var(--bs-white) !important;
+}
