@@ -2,12 +2,18 @@
 🚗 EasyWayRent | Web App
 </h1>
 
-![Laravel](https://img.shields.io/badge/Laravel-v12-red?style=flat-square&logo=laravel)
-![Angular](https://img.shields.io/badge/Angular-v19-DD0031?style=flat-square&logo=angular)
-![PHP](https://img.shields.io/badge/Angular-v19-DD0031?style=flat-square&logo=php)
-![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-v12-red?style=flat-square&logo=laravel"/>
+  <img src="https://img.shields.io/badge/Angular-v19-DD0031?style=flat-square&logo=angular"/>
+  <img src="https://img.shields.io/badge/PHP-v8.2-777BB4?style=flat-square&logo=php"/>
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square"/>
+</p>
 
-A full-stack car rental web application built with **Laravel 12** (REST API) and **Angular 19**. Customers can browse and reserve vehicles, while administrators manage cars, categories, and users via a secure back office.
+<p align="center">
+  A full-stack car rental web application built with <strong>Laravel 12</strong> (REST API) and <strong>Angular 19</strong>.<br>
+  Customers can browse and reserve vehicles, while administrators manage cars, categories, and users via a secure back office.
+</p>
+
 
 ---
 
