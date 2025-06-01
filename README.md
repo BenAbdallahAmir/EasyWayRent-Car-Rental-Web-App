@@ -140,13 +140,13 @@ ng serve
 - All admin routes are protected using <b>auth:sanctum</b>.
 
 - Example endpoints:
-  - POST /api/register
+  - <b>POST</b> /api/auth/register
 
-  - POST /api/login
+  - <b>POST</b> /api/auth/login
 
-  - GET /api/cars
+  - <b>GET</b> /api/user/cars
 
-  - POST /api/reservations
+  - <b>POST</b> /api/reservations/user
 
 ---
 
