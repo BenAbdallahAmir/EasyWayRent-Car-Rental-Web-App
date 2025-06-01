@@ -131,13 +131,13 @@ ng serve
 
 ### 🛢️ Import Database
 
-- Use phpMyAdmin to import the file at: sql/car_rental_db.sql  
+- Use phpMyAdmin to import the file at: <b>sql/car_rental_db.sql</b>  
 
 ---
 
 ## 🔐 API Authentication
 
-- All admin routes are protected using auth:sanctum.
+- All admin routes are protected using <b>auth:sanctum</b>.
 
 - Example endpoints:
   - POST /api/register
