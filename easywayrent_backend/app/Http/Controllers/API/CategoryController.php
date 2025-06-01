@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    // Lister toutes les catégories
+    // List all categories
     public function index()
     {
         $categories = Category::withCount('cars')->get();
@@ -18,7 +18,7 @@ class CategoryController extends Controller
         return response()->json($categories);
     }
 
-    // Récupérer une catégorie avec ses voitures
+    // Retrieve a category with its cars
     public function show($id)
     {
         $category = Category::with('cars')->find($id);
@@ -28,7 +28,7 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
-    // Créer une nouvelle catégorie (protégé par le middleware 'admin')
+    // Create a new category (protected by 'admin' middleware)
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -38,7 +38,7 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category created successfully!', 'category' => $category], 201);
     }
 
-    // Modifier une catégorie (protégé par le middleware 'admin')
+    // Update a category (protected by 'admin' middleware)
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
@@ -55,7 +55,7 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category updated successfully!', 'category' => $category]);
     }
 
-    // Supprimer une catégorie (protégé par le middleware 'admin')
+    // Delete a category (protected by 'admin' middleware)
     public function destroy($id)
     {
         $category = Category::find($id);
@@ -66,3 +66,4 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category deleted successfully!']);
     }
 }
+

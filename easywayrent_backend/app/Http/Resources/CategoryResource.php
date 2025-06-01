@@ -12,9 +12,10 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'cars_count' => $this->whenCounted('cars'), // Inclut le compte si chargé
-            'cars' => $this->whenLoaded('cars', fn() => $this->cars), // Inclut les voitures si chargées
+            'cars_count' => $this->whenCounted('cars'), // Includes the count if loaded
+            'cars' => $this->whenLoaded('cars', fn() => $this->cars), // Includes the cars if loaded
             'created_at' => $this->created_at,
         ];
     }
 }
+

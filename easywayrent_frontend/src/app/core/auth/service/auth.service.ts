@@ -11,7 +11,6 @@ export interface User {
   address: string;
   phone: string;
   role: string;
-  // Ajoutez d'autres propriétés selon votre modèle User
 }
 
 export interface AuthResponse {
@@ -31,7 +30,7 @@ export class AuthService {
   private tokenKey = 'auth_token';
 
   constructor(private http: HttpClient, private router: Router) {
-    // Vérifier si l'utilisateur est déjà connecté (token dans le localStorage)
+    // Check if the user is already logged in (token in localStorage)
     this.loadUserFromStorage();
   }
 
@@ -73,7 +72,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    // Si l'utilisateur n'est pas connecté, pas besoin d'appeler l'API
+    // If the user is not logged in, no need to call the API
     if (!this.currentUserSubject.value) {
       this.clearAuthData();
       this.router.navigate(['/login']);
@@ -83,7 +82,7 @@ export class AuthService {
       });
     }
 
-    // Sinon, appeler l'API pour révoquer le token
+    // Otherwise, call the API to revoke the token
     const headers = this.getAuthHeaders();
     return this.http
       .post<{ message: string }>(`${this.apiUrl}/logout`, {}, { headers })
@@ -97,7 +96,7 @@ export class AuthService {
   }
 
   private handleAuthentication(response: AuthResponse): void {
-    // Stocker le token et les informations utilisateur
+    // Store the token and user information
     localStorage.setItem(this.tokenKey, response.token);
     localStorage.setItem('current_user', JSON.stringify(response.user));
     this.currentUserSubject.next(response.user);
@@ -166,7 +165,7 @@ export class AuthService {
   }
 
   /**
-   * Met à jour le mot de passe de l'utilisateur
+   * Updates the user's password
    */
   updatePassword(passwordData: {
     current_password: string;
@@ -181,7 +180,7 @@ export class AuthService {
   }
 
   /**
-   * Met à jour les informations utilisateur dans le stockage local et le BehaviorSubject
+   * Updates the user information in local storage and the BehaviorSubject
    */
   updateUserInfo(user: User): void {
     localStorage.setItem('current_user', JSON.stringify(user));

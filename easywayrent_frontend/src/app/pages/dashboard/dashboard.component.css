@@ -11,7 +11,6 @@
   text-align: center;
 }
 
-/* Conteneur des cartes statistiques */
 .ag-format-container {
   width: 100%;
   margin: 0 auto;
@@ -87,7 +86,6 @@
   transition: all 0.5s ease;
 }
 
-/* Différentes couleurs pour les cartes */
 .ag-courses_item:nth-child(1) .ag-courses-item_bg {
   background-color: #f9b234;
 }
@@ -136,7 +134,6 @@
   background-color: #7b1fa2;
 }
 
-/* Animation au survol */
 .ag-courses-item_link:hover .ag-courses-item_bg {
   transform: scale(10);
 }
@@ -173,7 +170,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Message d'erreur */
 .error-message {
   background-color: #ffebee;
   color: #c62828;
@@ -183,7 +179,6 @@
   margin: 20px 0;
 }
 
-/* Bouton de rafraîchissement */
 .refresh-container {
   display: flex;
   justify-content: center;
@@ -206,7 +201,6 @@
   background-color: #3835c2;
 }
 
-/* Responsive design */
 @media only screen and (max-width: 979px) {
   .ag-courses_item {
     flex-basis: calc(50% - 30px);

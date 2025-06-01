@@ -27,7 +27,6 @@ Route::prefix('user')->group(function () {
 });
 
 // Admin Routes
-// middleware(['auth:sanctum', 'admin'])->
 Route::prefix('admin')->group(function () {
     // Cars Routes (Admin only)
     Route::post('/add_car', [CarController::class, 'store']);
@@ -67,9 +66,9 @@ Route::prefix('categories')->group(function () {
 });
 
 // Clients routes
-// middleware('auth:sanctum')->
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/carts', CartController::class)->only(['store', 'index', 'update', 'show', 'destroy']);
+    //Reservations Routes
     Route::get('/reservations/user', [ReservationController::class, 'userReservations']);
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::put('/reservations/{id}/cancel', [ReservationController::class, 'cancel']);
@@ -78,7 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reservations/from-cart', [ReservationController::class, 'storeFromCart']);
 });
 Route::middleware('auth:sanctum')->group(function () {
-    // Routes de profil utilisateur
+    // User Profile and Password Management
     Route::get('/auth/profile', [AuthController::class, 'getUserProfile']);
     Route::put('/auth/password', [AuthController::class, 'updatePassword']);
 });

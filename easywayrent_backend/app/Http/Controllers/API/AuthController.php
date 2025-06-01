@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    // Inscription
+    // Register
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -24,7 +24,7 @@ class AuthController extends Controller
             'role' => 'nullable|string|in:admin,client'
         ]);
 
-        // Si aucun rôle n'est fourni, mettre "client" par défaut
+        // If no role is provided, set "client" as default
         $role = $data['role'] ?? 'client';
 
         $user = User::create([
@@ -46,7 +46,7 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Connexion (pour les clients et l'admin)
+    // Login (for clients and admin)
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -73,28 +73,17 @@ class AuthController extends Controller
         ]);
     }
 
-    //Promouvoir un utilisateur en admin
+    // Promote a user to admin
     public function setAdmin($id)
     {
-        // Vérifier que l'utilisateur est authentifié
-        // $userAuthenticated = Auth::user();
-        // if (!$userAuthenticated) {
-        //     return response()->json(['message' => 'Unauthorized. User not authenticated.'], 401);
-        // }
-
-        // Vérifier si l'utilisateur authentifié est un administrateur
-        // if ($userAuthenticated->role !== 'admin') {
-        //     return response()->json(['message' => 'Unauthorized. Only admins can promote users.'], 403);
-        // }
-
         $user = User::findOrFail($id);
 
-        // Vérifier si l'utilisateur est déjà admin
+        // Check if the user is already an admin
         if ($user->role === 'admin') {
             return response()->json(['message' => 'User is already an admin.'], 400);
         }
 
-        // Promouvoir l'utilisateur
+        // Promote the user
         $user->role = 'admin';
         $user->save();
 
@@ -103,32 +92,17 @@ class AuthController extends Controller
             'user' => $user
         ]);
 
-        //Lister tous les utilisateurs
+        // List all users
     }
     public function index()
     {
-        // Vérifier que l'utilisateur est authentifié
-        // $userAuthenticated = Auth::user();
-        // if (!$userAuthenticated) {
-        //     return response()->json(['message' => 'Unauthorized. User not authenticated.'], 401);
-        // }
-
-        // Vérifier si l'utilisateur authentifié est un administrateur
-        // if ($userAuthenticated->role !== 'admin') {
-        //     return response()->json(['message' => 'Unauthorized. Only admins can promote users.'], 403);
-        // }
         $users = User::all();
         return response()->json($users);
     }
 
-    // Liste des administrateurs (accessible uniquement par un admin)
+    // List of administrators (accessible only by an admin)
     public function getAdmins()
     {
-        // $userAuthenticated = Auth::user();
-        // if (!$userAuthenticated || $userAuthenticated->role !== 'admin') {
-        //     return response()->json(['message' => 'Unauthorized. Only admins can view this list.'], 403);
-        // }
-
         $admins = User::where('role', 'admin')->get();
 
         if ($admins->isEmpty()) {
@@ -138,14 +112,9 @@ class AuthController extends Controller
         return response()->json($admins);
     }
 
-    // Liste des clients (accessible uniquement par un admin)
+    // List of clients (accessible only by an admin)
     public function getClients()
     {
-        // $userAuthenticated = Auth::user();
-        // if (!$userAuthenticated || $userAuthenticated->role !== 'admin') {
-        //     return response()->json(['message' => 'Unauthorized. Only admins can view this list.'], 403);
-        // }
-
         $clients = User::where('role', 'client')->get();
 
         if ($clients->isEmpty()) {
@@ -157,11 +126,6 @@ class AuthController extends Controller
 
     public function updateUser(Request $request, $id)
     {
-        // $userAuthenticated = Auth::user();
-        // if (!$userAuthenticated || $userAuthenticated->role !== 'admin') {
-        //     return response()->json(['message' => 'Unauthorized. Only admins can update users.'], 403);
-        // }
-
         $user = User::find($id);
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -187,11 +151,6 @@ class AuthController extends Controller
 
     public function deleteUser($id)
     {
-        // $userAuthenticated = Auth::user();
-        // if (!$userAuthenticated || $userAuthenticated->role !== 'admin') {
-        //     return response()->json(['message' => 'Unauthorized. Only admins can delete users.'], 403);
-        // }
-
         $user = User::find($id);
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -203,7 +162,7 @@ class AuthController extends Controller
     }
 
 
-    // Déconnexion
+    // Logout
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
@@ -222,7 +181,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Mettre à jour le mot de passe de l'utilisateur
+     * Update the user's password
      */
     public function updatePassword(Request $request)
     {
@@ -242,9 +201,9 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Vérifier que le mot de passe actuel est correct
+        // Check that the current password is correct
         if (!Hash::check($request->current_password, $user->password)) {
-            return response()->json(['message' => 'Le mot de passe actuel est incorrect.'], 422);
+            return response()->json(['message' => 'The current password is incorrect.'], 422);
         }
 
         $user->password = Hash::make($request->password);
@@ -253,3 +212,4 @@ class AuthController extends Controller
         return response()->json(['message' => 'Password updated successfully!']);
     }
 }
+

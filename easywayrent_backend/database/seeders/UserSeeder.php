@@ -10,7 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Administrateur
+        // Admin
         User::create([
             'name' => 'admin',
             'email' => 'admin@example.com',
@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        // Utilisateur normal
+        // User
         User::create([
             'name' => 'user',
             'email' => 'user@example.com',

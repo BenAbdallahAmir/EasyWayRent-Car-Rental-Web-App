@@ -10,15 +10,15 @@ use Illuminate\Support\Str;
 
 class CarController extends Controller
 {
-    // Lister toutes les voitures disponibles (public)
+    // List all available cars (public)
     public function index()
     {
         $cars = Car::with('category')->get();
 
-        // Ajouter l'URL complète de l'image pour chaque voiture
+        // Add the full image URL for each car
         foreach ($cars as $car) {
             if ($car->image) {
-                // Vérifier si l'image est déjà une URL complète
+                // Check if the image is already a full URL
                 if (!Str::startsWith($car->image, ['http://', 'https://'])) {
                     $car->image = asset('storage/' . $car->image);
                 }
@@ -40,10 +40,10 @@ class CarController extends Controller
 
         $cars = Car::where('status', $status)->with('category')->get();
 
-        // Ajouter l'URL complète de l'image pour chaque voiture
+        // Add the full image URL for each car
         foreach ($cars as $car) {
             if ($car->image) {
-                // Vérifier si l'image est déjà une URL complète
+                // Check if the image is already a full URL
                 if (!Str::startsWith($car->image, ['http://', 'https://'])) {
                     $car->image = asset('storage/' . $car->image);
                 }
@@ -62,7 +62,7 @@ class CarController extends Controller
 
         $cars->transform(function ($car) {
             if ($car->image) {
-                // Vérifier si l'image est déjà une URL complète
+                // Check if the image is already a full URL
                 if (!Str::startsWith($car->image, ['http://', 'https://'])) {
                     $car->image = asset('storage/' . $car->image);
                 }
@@ -73,7 +73,7 @@ class CarController extends Controller
         return response()->json($cars);
     }
 
-    // Afficher une voiture spécifique (public)
+    // Show a specific car (public)
     public function show($id)
     {
         $car = Car::with('category')->find($id);
@@ -83,7 +83,7 @@ class CarController extends Controller
         }
 
         if ($car->image) {
-            // Vérifier si l'image est déjà une URL complète
+            // Check if the image is already a full URL
             if (!Str::startsWith($car->image, ['http://', 'https://'])) {
                 $car->image = asset('storage/' . $car->image);
             }
@@ -92,7 +92,7 @@ class CarController extends Controller
         return response()->json($car);
     }
 
-    // Ajouter une voiture
+    // Add a car
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -112,7 +112,7 @@ class CarController extends Controller
 
         try {
             if ($request->hasFile('image')) {
-                // Générer un nom unique pour éviter les collisions
+                // Generate a unique name to avoid collisions
                 $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
                 $imagePath = $request->file('image')->storeAs('car_images', $fileName, 'public');
                 $data['image'] = $imagePath;
@@ -120,7 +120,7 @@ class CarController extends Controller
 
             $car = Car::create($data);
 
-            // Charger la relation categorie et formater l'URL de l'image
+            // Load the category relation and format the image URL
             $car->load('category');
 
             if ($car->image) {
@@ -133,7 +133,7 @@ class CarController extends Controller
         }
     }
 
-    //Supprimer une voiture
+    // Delete a car
     public function destroy($id)
     {
         $car = Car::find($id);
@@ -179,7 +179,7 @@ class CarController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            // Supprimer l'ancienne image si elle existe
+            // Delete the old image if it exists
             if ($car->image) {
                 $oldImagePath = str_replace(asset('storage/'), '', $car->image);
                 if (Storage::exists('public/' . $oldImagePath)) {
@@ -187,7 +187,7 @@ class CarController extends Controller
                 }
             }
 
-            // Générer un nom unique pour éviter les collisions
+            // Generate a unique name to avoid collisions
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
             $imagePath = $request->file('image')->storeAs('car_images', $fileName, 'public');
             $data['image'] = $imagePath;
@@ -202,7 +202,7 @@ class CarController extends Controller
         $car = $car->fresh('category');
 
         if ($car->image) {
-            // Vérifier si l'image est déjà une URL complète
+            // Check if the image is already a full URL
             if (!Str::startsWith($car->image, ['http://', 'https://'])) {
                 $car->image = asset('storage/' . $car->image);
             }
@@ -211,3 +211,4 @@ class CarController extends Controller
         return response()->json(['message' => 'Car successfully updated', 'car' => $car], 200);
     }
 }
+

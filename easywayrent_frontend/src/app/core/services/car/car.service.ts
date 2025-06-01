@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Car } from '../../../models/car';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -13,33 +12,33 @@ export class CarService {
 
   constructor(private http: HttpClient) {}
 
-  // Récupérer toutes les voitures
+  // Retrieve all cars
   getAllCars(): Observable<any> {
     return this.http.get(`${this.apiUrl}/cars`);
   }
 
-  // Récupérer les voitures selon leur statut
+  // Retrieve cars by their status
   getCarsByStatus(status: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/cars/${status}`);
   }
 
-  // Récupérer une voiture par son ID
+  // Retrieve a car by its ID
   getCarById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/car/${id}`);
   }
 
-  // Ajouter une nouvelle voiture
+  // Add a new car
   addCar(carData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/add_car`, carData);
   }
 
-  // Mettre à jour une voiture
+  // Update a car
   updateCar(id: number, carData: FormData): Observable<any> {
     carData.append('_method', 'PUT');
     return this.http.post(`${this.apiUrl}/update_car/${id}`, carData);
   }
 
-  // Supprimer une voiture
+  // Delete a car
   deleteCar(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete_car/${id}`);
   }

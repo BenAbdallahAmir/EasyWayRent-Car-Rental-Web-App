@@ -62,20 +62,20 @@ export class CartComponent implements OnInit {
     this.loadCartItems();
   }
 
-  // Méthode améliorée pour construire l'URL complète de l'image
+  // Improved method to build the full image URL
   getFullImageUrl(imagePath: string | undefined): string {
-    // Si l'image est undefined ou vide, retourner l'image par défaut
+    // If the image is undefined or empty, return the default image
     if (!imagePath || imagePath.trim() === '') {
       return 'assets/images/car-placeholder.jpg';
     }
 
-    // Si l'URL est déjà complète (commence par http ou https), la retourner telle quelle
+    // If the URL is already complete (starts with http or https), return it as is
     if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
       return imagePath;
     }
 
-    // Nettoyer le chemin d'image pour éviter les doubles slashes
-    // Supprimer à la fois les slashes au début du chemin d'image et à la fin de l'URL de base
+    // Clean the image path to avoid double slashes
+    // Remove both slashes at the beginning of the image path and at the end of the base URL
     const baseUrl = this.apiBaseUrl.endsWith('/')
       ? this.apiBaseUrl.slice(0, -1)
       : this.apiBaseUrl;
@@ -84,11 +84,11 @@ export class CartComponent implements OnInit {
       ? imagePath.substring(1)
       : imagePath;
 
-    // Construire l'URL complète
+    // Build the full URL
     return `${baseUrl}/storage/${cleanPath}`;
   }
 
-  // Nouvelle méthode pour vérifier explicitement si le panier est vide
+  // New method to explicitly check if the cart is empty
   isCartEmpty(): boolean {
     return !this.cartItems || this.cartItems.length === 0;
   }
@@ -99,19 +99,6 @@ export class CartComponent implements OnInit {
       next: (items) => {
         this.cartItems = Array.isArray(items) ? items : [];
         this.loading = false;
-        // Déboguer les images
-        console.log('Cart items loaded:', this.cartItems);
-        if (
-          this.cartItems &&
-          this.cartItems.length > 0 &&
-          this.cartItems[0].car
-        ) {
-          console.log('First car image path:', this.cartItems[0].car.image);
-          console.log(
-            'Generated image URL:',
-            this.getFullImageUrl(this.cartItems[0].car.image)
-          );
-        }
       },
       error: (error) => {
         this.loading = false;
@@ -128,7 +115,7 @@ export class CartComponent implements OnInit {
         }
       },
       complete: () => {
-        // S'assurer que loading est mis à false même si l'observable se termine sans émettre de valeur
+        // Ensure loading is set to false even if the observable completes without emitting a value
         this.loading = false;
       },
     });
@@ -249,3 +236,4 @@ export class CartComponent implements OnInit {
     return date.toISOString().split('T')[0];
   }
 }
+

@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
         address: this.currentUser.address,
       });
     } else {
-      // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+      // If the user is not logged in, redirect to the login page
       this.router.navigate(['/login']);
     }
   }
@@ -92,7 +92,7 @@ export class ProfileComponent implements OnInit {
     this.successMessage = '';
 
     if (!this.isEditing) {
-      // Si on quitte le mode édition, réinitialiser le formulaire
+      // If exiting edit mode, reset the form
       this.loadUserProfile();
     }
   }
@@ -128,7 +128,7 @@ export class ProfileComponent implements OnInit {
         ...this.profileForm.value,
       };
 
-      // Utiliser le service d'utilisateur pour mettre à jour le profil
+      // Use the user service to update the profile
       this.userService
         .updateUser(this.currentUser.id, profileData)
         .pipe(
@@ -146,11 +146,11 @@ export class ProfileComponent implements OnInit {
           if (response) {
             this.successMessage = 'Profile updated successfully!';
 
-            // Mettre à jour l'utilisateur local avec les nouvelles informations
+            // Update the local user with the new information
             if (this.currentUser && response.user) {
               this.currentUser = response.user;
 
-              // Mettre à jour l'utilisateur dans le localStorage via AuthService
+              // Update the user in localStorage via AuthService
               const token = this.authService.getToken();
               if (token) {
                 this.authService.updateUserInfo(response.user);
@@ -175,7 +175,7 @@ export class ProfileComponent implements OnInit {
         password_confirmation: this.passwordForm.value.confirmPassword,
       };
 
-      // Utiliser la méthode updatePassword du service AuthService
+      // Use the updatePassword method from AuthService
       this.authService
         .updatePassword(passwordData)
         .pipe(

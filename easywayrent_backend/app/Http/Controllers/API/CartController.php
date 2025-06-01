@@ -17,7 +17,7 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $cartItems = Cart::where('user_id', $user->id)
-            ->with('car') // Charger les détails de la voiture
+            ->with('car') // Load car details
             ->get();
 
         if ($cartItems->isEmpty()) {
@@ -42,17 +42,17 @@ class CartController extends Controller
             'dropoff_location' => 'required|string|max:255',
         ]);
 
-        // Vérifier la disponibilité de la voiture
+        // Check car availability
         $car = Car::find($data['car_id']);
         if (!$car || $car->status !== 'available') {
             return response()->json(['message' => 'This car is not available'], 400);
         }
 
-        // Calculer le prix total
+        // Calculate total price
         $days = (strtotime($data['end_date']) - strtotime($data['start_date'])) / 86400;
         $totalPrice = $days * $car->price_per_day;
 
-        // Créer l'article dans le panier
+        // Create cart item
         $cartItem = Cart::create([
             'user_id' => $user->id,
             'car_id' => $data['car_id'],
@@ -61,7 +61,7 @@ class CartController extends Controller
             'pickup_location' => $data['pickup_location'],
             'dropoff_location' => $data['dropoff_location'],
             'total_price' => $totalPrice,
-            'reservation_id' => null, // Pas encore lié à une réservation
+            'reservation_id' => null, // Not yet linked to a reservation
         ]);
 
         return response()->json([
@@ -77,7 +77,7 @@ class CartController extends Controller
     {
         $user = Auth::user();
 
-        // Vérifier que l'article appartient à l'utilisateur
+        // Check that the item belongs to the user
         if ($cart->user_id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -92,7 +92,7 @@ class CartController extends Controller
     {
         $user = Auth::user();
 
-        // Vérifier que l'article appartient à l'utilisateur
+        // Check that the item belongs to the user
         if ($cart->user_id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -104,7 +104,7 @@ class CartController extends Controller
             'dropoff_location' => 'sometimes|string|max:255',
         ]);
 
-        // Recalculer le prix total si les dates changent
+        // Recalculate total price if dates change
         if ($request->has('start_date') || $request->has('end_date')) {
             $startDate = $request->input('start_date', $cart->start_date);
             $endDate = $request->input('end_date', $cart->end_date);
@@ -127,22 +127,23 @@ class CartController extends Controller
     {
         $user = Auth::user();
 
-        // Rechercher l'élément du panier
+        // Find the cart item
         $cart = Cart::find($id);
 
-        // Vérifier s'il existe
+        // Check if it exists
         if (!$cart) {
             return response()->json(['message' => 'Cart item not found'], 404);
         }
 
-        // Vérifier que l'article appartient bien à l'utilisateur
+        // Check that the item belongs to the user
         if ($cart->user_id !== $user->id) {
             return response()->json(['message' => 'Unauthorized - This cart item does not belong to you'], 403);
         }
 
-        // Supprimer l'élément
+        // Delete the item
         $cart->delete();
 
         return response()->json(['message' => 'Cart item removed successfully'], 200);
     }
 }
+

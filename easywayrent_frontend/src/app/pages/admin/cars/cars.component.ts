@@ -123,7 +123,7 @@ export class CarsComponent implements OnInit {
       'https://musee-possen.lu/wp-content/uploads/2020/08/placeholder.png';
   }
 
-  // Vérification si l'URL de l'image est valide
+  // Verify if the URL is a valid image URL
   isValidImageUrl(url: string): boolean {
     return !!url && (url.startsWith('http://') || url.startsWith('https://'));
   }
@@ -146,7 +146,7 @@ export class CarsComponent implements OnInit {
       next: (response) => {
         this.loadCars();
         this.resetForm();
-        // Fermer le modal
+        // Close the modal
         document.getElementById('closeAddModal')?.click();
         this.successMessage = 'Car added successfully!';
         setTimeout(() => {
@@ -188,12 +188,12 @@ export class CarsComponent implements OnInit {
     this.loading = true;
     const formData = new FormData();
 
-    // Ajouter tous les champs du formulaire au FormData
+    // Add all form values to FormData
     Object.keys(this.updateCarForm.value).forEach((key) => {
       formData.append(key, this.updateCarForm.value[key]);
     });
 
-    // Ajouter l'image si une nouvelle a été sélectionnée
+    // Add the selected image file if it exists
     if (this.selectedImageFile) {
       formData.append('image', this.selectedImageFile);
     }
@@ -201,7 +201,7 @@ export class CarsComponent implements OnInit {
     this.carService.updateCar(this.selectedCar.id, formData).subscribe({
       next: (response) => {
         this.loadCars();
-        // Fermer le modal
+        // Close the modal
         document.getElementById('closeUpdateModal')?.click();
         this.successMessage = 'Car updated successfully!';
         setTimeout(() => {

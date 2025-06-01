@@ -23,7 +23,6 @@ export class ReservationsComponent implements OnInit {
   constructor(
     private reservationService: ReservationService,
     private authService: AuthService,
-    // private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -35,9 +34,6 @@ export class ReservationsComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    // const observable = this.isAdmin
-    //   ? this.reservationService.getAllReservations()
-    //   : this.reservationService.getUserReservations();
     const observable= this.reservationService.getAllReservations();
     observable.subscribe({
       next: (data) => {
@@ -120,8 +116,4 @@ export class ReservationsComponent implements OnInit {
     });
   }
 
-  // Format date for better display
-  // formatDate(date: string): string {
-  //   return this.datePipe.transform(date, 'dd MMM yyyy') || 'N/A';
-  // }
 }

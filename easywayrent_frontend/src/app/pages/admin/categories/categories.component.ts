@@ -44,49 +44,7 @@ export class CategoriesComponent implements OnInit {
       next: (res) => (this.categories = res),
     });
   }
-
-  // onSubmit() {
-  //   if (this.categoryForm.invalid) return;
-
-  //   const formData = this.categoryForm.value;
-
-  //   if (this.selectedCategoryId) {
-  //     this.categoryService
-  //       .updateCategory(this.selectedCategoryId, formData)
-  //       .subscribe({
-  //         next: (res) => {
-  //           this.successMessage = 'Category has been updated successfully';
-  //           this.fetchCategories();
-
-  //           setTimeout(() => {
-  //             this.successMessage = '';
-  //             this.resetForm();
-  //           }, 3000);
-  //         },
-  //         error: (err) => {
-  //           this.errorMessage = err.error.message;
-  //           setTimeout(() => (this.errorMessage = ''), 4000);
-  //         },
-  //       });
-  //   } else {
-  //     this.categoryService.createCategory(formData).subscribe({
-  //       next: (res) => {
-  //         this.successMessage = 'Category has been added successfully';
-  //         this.fetchCategories();
-
-  //         setTimeout(() => {
-  //           this.successMessage = '';
-  //           this.resetForm();
-  //         }, 3000);
-  //       },
-  //       error: (err) => {
-  //         this.errorMessage = err.error.message;
-  //         setTimeout(() => (this.errorMessage = ''), 4000);
-  //       },
-  //     });
-  //   }
-  // }
-
+  
   updateCategory(cat: any) {
     this.selectedCategoryId = cat.id;
     this.updateCatForm.patchValue({ name: cat.name });

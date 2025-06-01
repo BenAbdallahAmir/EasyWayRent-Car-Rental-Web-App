@@ -11,10 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Middleware global existant (Sanctum)
+        // Existing global middleware (Sanctum)
         $middleware->append(\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
 
-        // Ajout de l'alias pour AdminMiddleware
+        // Add alias for AdminMiddleware
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);

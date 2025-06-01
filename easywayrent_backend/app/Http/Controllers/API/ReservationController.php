@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
-    // Méthode utilitaire pour vérifier les conflits de dates
+    // Utility method to check for date conflicts
     private function hasDateConflict($carId, $startDate, $endDate, $excludeId = null)
     {
         $query = Reservation::where('car_id', $carId)
@@ -32,7 +32,7 @@ class ReservationController extends Controller
         return $query->exists();
     }
 
-    public function index()// Lister toutes les réservations
+    public function index()// List all reservations
     {
         $reservations = Reservation::with(['car', 'user'])->get();
         if ($reservations->isEmpty()) {
@@ -41,14 +41,14 @@ class ReservationController extends Controller
         return response()->json($reservations);
     }
 
-    public function userReservations() // Lister les reservations d'un utilisateur
+    public function userReservations() // List reservations for a user
     {
         $reservations = Reservation::where('user_id', Auth::id())->with('car')->get();
 
         return response()->json($reservations);
     }
 
-    public function storeFromCart(Request $request) //créer une réservation à partir du panier
+    public function storeFromCart(Request $request) // Create a reservation from the cart
     {
         $user = Auth::user();
         $cartItem = Cart::where('user_id', $user->id)->find($request->cart_id);
@@ -70,7 +70,7 @@ class ReservationController extends Controller
             'payment_method' => 'required|string|in:credit_card,paypal,cash',
         ]);
 
-        // Transaction pour garantir la consistance
+        // Transaction to ensure consistency
         DB::beginTransaction();
         try {
             $reservation = Reservation::create([
@@ -115,12 +115,12 @@ class ReservationController extends Controller
             $startDate = new \DateTime($data['start_date']);
             $endDate = new \DateTime($data['end_date']);
 
-            // Vérifier si la date de fin est bien après la date de début
+            // Check if end date is after start date
             if ($endDate < $startDate) {
                 return response()->json(['message' => 'End date must be after start date'], 400);
             }
 
-            // Vérifier la cohérence des années (éviter 2025 -> 2023)
+            // Check year consistency (avoid 2025 -> 2023)
             if ($endDate->format('Y') < $startDate->format('Y')) {
                 return response()->json(['message' => 'End year cannot be before start year'], 400);
             }
@@ -163,7 +163,7 @@ class ReservationController extends Controller
     }
 
 
-    public function showForAdmin($id) // Afficher une réservation pour l'administrateur
+    public function showForAdmin($id) // Show a reservation for the admin
     {
         $reservation = Reservation::with(['car', 'user'])->find($id);
 
@@ -174,7 +174,7 @@ class ReservationController extends Controller
         return response()->json($reservation);
     }
 
-    public function showForClient($id) // Afficher une réservation pour le client
+    public function showForClient($id) // Show a reservation for the client
     {
         $user = Auth::user();
         $reservation = Reservation::with('car')->where('id', $id)->where('user_id', $user->id)->first();
@@ -187,7 +187,7 @@ class ReservationController extends Controller
     }
 
 
-    public function updateReservationStatus(Request $request, $id)// Mettre à jour le statut d'une réservation
+    public function updateReservationStatus(Request $request, $id)// Update the status of a reservation
     {
 
         $reservation = Reservation::find($id);
@@ -215,12 +215,12 @@ class ReservationController extends Controller
             return response()->json(['message' => 'Reservation not found'], 404);
         }
 
-        // Vérifier si la réservation est confirmée ou complétée
+        // Check if the reservation is confirmed or completed
         if (in_array($reservation->status, ['confirmed', 'completed'])) {
             return response()->json(['message' => 'You cannot modify a confirmed or completed reservation'], 403);
         }
 
-        // Vérifier si l'utilisateur est autorisé
+        // Check if the user is authorized
         if (Auth::id() !== $reservation->user_id && Auth::user()->role !== 'admin') {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -262,32 +262,32 @@ class ReservationController extends Controller
             return response()->json(['message' => 'Reservation not found'], 404);
         }
 
-        // Vérifier que seul le client peut annuler sa propre réservation
+        // Ensure only the client can cancel their own reservation
         if (Auth::id() !== $reservation->user_id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        // Vérifier si la réservation est déjà annulée
+        // Check if the reservation is already cancelled
         if ($reservation->status === 'cancelled') {
             return response()->json(['message' => 'Reservation is already cancelled'], 400);
         }
 
-        // Vérifier si la réservation est confirmée ou complétée (annulation non autorisée)
+        // Check if the reservation is confirmed or completed (cancellation not allowed)
         if (in_array($reservation->status, ['confirmed', 'completed'])) {
             return response()->json(['message' => 'You cannot cancel a confirmed or completed reservation'], 403);
         }
 
-        // Mettre à jour le statut de la réservation
+        // Update the reservation status
         $reservation->update(['status' => 'cancelled']);
 
-        // Rendre la voiture à nouveau disponible
+        // Make the car available again
         $reservation->car->update(['status' => 'available']);
 
         return response()->json(['message' => 'Reservation cancelled successfully']);
     }
 
 
-    public function destroy($id)// Supprimer une réservation
+    public function destroy($id)// Delete a reservation
     {
 
         $reservation = Reservation::find($id);
@@ -301,3 +301,4 @@ class ReservationController extends Controller
         return response()->json(['message' => 'Reservation deleted successfully']);
     }
 }
+

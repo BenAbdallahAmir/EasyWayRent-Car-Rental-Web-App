@@ -43,12 +43,12 @@ export class AdminGuard implements CanActivate, CanActivateChild {
       return true;
     }
 
-    // Si l'utilisateur est connecté mais n'est pas admin
+    //if user is logged in but not admin, redirect to access denied page
     if (this.authService.isLoggedIn()) {
       return this.router.createUrlTree(['/access-denied']);
     }
 
-    // Si l'utilisateur n'est pas connecté
+    //if user is not logged in, redirect to login page
     return this.router.createUrlTree(['/login']);
   }
 }

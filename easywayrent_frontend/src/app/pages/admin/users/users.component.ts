@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
   selectedUserId: number | null = null;
   isEditMode = false;
 
-  // Filtre
+  // Filter
   currentFilter: 'all' | 'admin' | 'client' = 'all';
 
   constructor(private userService: UserService, private fb: FormBuilder) {
@@ -89,7 +89,6 @@ export class UsersComponent implements OnInit {
     this.isEditMode = false;
     this.userForm.reset();
     this.userForm.patchValue({ role: 'client' });
-    // Ajoutez ici le code pour ouvrir le modal (utilisez Bootstrap ou autre méthode)
   }
 
   openEditUserModal(user: User): void {
@@ -101,13 +100,11 @@ export class UsersComponent implements OnInit {
       address: user.address,
       phone: user.phone,
       role: user.role,
-      // Ne pas précharger le mot de passe
     });
-    // Le champ password est optionnel lors de l'édition
+    // The password field is optional when editing
     this.userForm.get('password')?.clearValidators();
     this.userForm.get('password')?.updateValueAndValidity();
 
-    // Ajoutez ici le code pour ouvrir le modal (utilisez Bootstrap ou autre méthode)
   }
 
   saveUser(): void {
@@ -119,7 +116,6 @@ export class UsersComponent implements OnInit {
     const userData = this.userForm.value;
 
     if (this.isEditMode && this.selectedUserId) {
-      // Si le mot de passe est vide, le supprimer de l'objet
       if (!userData.password) {
         delete userData.password;
       }
@@ -140,7 +136,6 @@ export class UsersComponent implements OnInit {
         },
       });
     } else {
-      // Assurez-vous que le mot de passe est requis pour un nouvel utilisateur
       if (!userData.password) {
         this.errorMessage = 'Password is required for new users';
         setTimeout(() => (this.errorMessage = ''), 3000);
@@ -233,7 +228,6 @@ export class UsersComponent implements OnInit {
   }
 
   closeModal(): void {
-    // Code pour fermer le modal (utilisez l'élément DOM ou autre méthode selon votre configuration)
     document.getElementById('closeUserModal')?.click();
     this.userForm.reset();
     this.selectedUserId = null;

@@ -57,7 +57,6 @@ export class CarsComponent implements OnInit {
         });
         this.filteredCars = [...this.cars];
         this.extractUniqueBrands();
-        console.log('Cars with categories:', this.cars);
       },
       error: (error) => {
         console.error('Error fetching cars:', error);
@@ -69,7 +68,6 @@ export class CarsComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe({
       next: (data) => {
         this.categories = data;
-        console.log('Categories loaded:', this.categories);
         // Now that categories are loaded, load cars to ensure we can assign categories
         if (this.cars.length > 0) {
           this.mapCategoriesToCars();
@@ -100,7 +98,6 @@ export class CarsComponent implements OnInit {
     // Extract unique brands from the cars array
     const brands = this.cars.map((car) => car.brand);
     this.uniqueBrands = [...new Set(brands)].filter((brand) => brand); // Remove any undefined or empty values
-    console.log('Unique brands:', this.uniqueBrands);
   }
 
   getCategoryName(car: Car): string {

@@ -41,7 +41,7 @@ export class ReservationService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  // Utiliser les en-têtes d'authentification pour toutes les requêtes
+  // User authentication headers for API requests
   private getAuthHeaders(): HttpHeaders {
     return new HttpHeaders(this.authService.getAuthHeaders());
   }

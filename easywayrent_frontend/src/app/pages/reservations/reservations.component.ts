@@ -1,4 +1,3 @@
-// reservations.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
@@ -45,13 +44,13 @@ export class ReservationsComponent implements OnInit {
       .getUserReservations()
       .pipe(
         catchError((error) => {
-          // Si le backend renvoie 404 pour "aucune réservation",
-          // on traite ça comme un tableau vide plutôt qu'une erreur
+          // If the backend returns 404 for "no reservations",
+          // treat it as an empty array instead of an error
           if (error.status === 404) {
             return of([]);
           }
 
-          // Sinon on capture et journalise l'erreur
+          // Otherwise, capture and log the error
           console.error('Error loading reservations:', error);
           this.errorMessage =
             error.error?.message || 'Failed to load reservations';
@@ -64,7 +63,7 @@ export class ReservationsComponent implements OnInit {
           this.loading = false;
         },
         error: (error) => {
-          // Cette partie ne devrait pas être atteinte grâce au catchError
+          // This part should not be reached thanks to catchError
           this.loading = false;
           this.errorMessage = 'Failed to load reservations';
           Swal.fire('Error', this.errorMessage, 'error');
@@ -83,7 +82,7 @@ export class ReservationsComponent implements OnInit {
       if (result.isConfirmed) {
         this.reservationService.cancelReservation(id).subscribe({
           next: () => {
-            // Mettre à jour le statut localement sans recharger la page
+            // Update the status locally without reloading the page
             const reservation = this.reservations.find((r) => r.id === id);
             if (reservation) {
               reservation.status = 'cancelled';

@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  // Statistiques générales
+  // General statistics
   totalCars: number = 0;
   availableCars: number = 0;
   totalReservations: number = 0;
@@ -27,11 +27,11 @@ export class DashboardComponent implements OnInit {
   totalCategories: number = 0;
   mostPopularCategory: string = 'N/A';
 
-  // État de chargement
+  // Loading state
   loading: boolean = true;
   error: string | null = null;
 
-  // Données pour les graphiques (si on veut les ajouter plus tard)
+  // Data for charts (if we want to add them later)
   reservationsByMonth: any[] = [];
   revenueByMonth: any[] = [];
   categoryRentals: { [key: string]: number } = {};
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
       categories: this.categoryService.getAllCategories(),
     }).subscribe({
       next: (results) => {
-        // Calcul des statistiques de base
+        // Calculate basic statistics
         this.totalCars = results.allCars.length;
         this.availableCars = results.availableCars.length;
         this.totalReservations = results.allReservations.length;
@@ -67,42 +67,42 @@ export class DashboardComponent implements OnInit {
         this.totalAdmins = results.admins.length;
         this.totalCategories = results.categories.length;
 
-        // Traitement des statistiques de réservation
+        // Process reservation statistics
         const reservations = results.allReservations;
 
-        // Filtrer les réservations actives (ni annulées ni terminées)
+        // Filter active reservations (neither cancelled nor completed)
         this.activeReservations = reservations.filter(
           (res) => res.status !== 'cancelled' && res.status !== 'completed'
         ).length;
 
-        // Réservations terminées
+        // Completed reservations
         this.completedReservations = reservations.filter(
           (res) => res.status === 'completed'
         ).length;
 
-        // Réservations en attente
+        // Pending reservations
         this.pendingReservations = reservations.filter(
           (res) => res.status === 'pending'
         ).length;
 
-        // Calculer le revenu total (excluant les réservations annulées)
+        // Calculate total revenue (excluding cancelled reservations)
         this.totalRevenue = reservations
           .filter((res) => res.status !== 'cancelled')
           .reduce((sum, res) => sum + res.total_price, 0);
 
-        // Calculer le revenu des réservations terminées
+        // Calculate revenue from completed reservations
         this.completedRevenue = reservations
           .filter((res) => res.status === 'completed')
           .reduce((sum, res) => sum + res.total_price, 0);
 
-        // Analyser les catégories les plus populaires
+        // Analyze the most popular categories
         this.analyzeMostPopularCategory(
           reservations,
           results.allCars,
           results.categories
         );
 
-        // Préparer les données pour les graphiques si nécessaire
+        // Prepare data for charts if necessary
         this.prepareChartData(reservations);
 
         this.loading = false;
@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit {
     cars: any[],
     categories: any[]
   ): void {
-    // Créer un mapping des voitures à leurs catégories
+    // Create a mapping of cars to their categories
     const carCategoryMap: { [key: number]: number } = {};
     cars.forEach((car) => {
       if (car.category_id) {
@@ -128,17 +128,17 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    // Créer un mapping des IDs de catégories à leurs noms
+    // Create a mapping of category IDs to their names
     const categoryNameMap: { [key: number]: string } = {};
     categories.forEach((category) => {
       categoryNameMap[category.id] = category.name;
     });
 
-    // Compter les réservations par catégorie
+    // Count reservations by category
     const categoryCount: { [key: number]: number } = {};
 
     reservations
-      .filter((res) => res.status !== 'cancelled') // Exclure les réservations annulées
+      .filter((res) => res.status !== 'cancelled') // Exclude cancelled reservations
       .forEach((res) => {
         const carId = res.car_id;
         const categoryId = carCategoryMap[carId];
@@ -148,7 +148,7 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-    // Trouver la catégorie la plus populaire
+    // Find the most popular category
     let maxCount = 0;
     let popularCategoryId = null;
 
@@ -160,7 +160,7 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    // Définir la catégorie la plus populaire
+    // Set the most popular category
     this.mostPopularCategory =
       popularCategoryId && categoryNameMap[popularCategoryId]
         ? categoryNameMap[popularCategoryId]
@@ -168,7 +168,7 @@ export class DashboardComponent implements OnInit {
   }
 
   prepareChartData(reservations: any[]): void {
-    // Créer des statistiques par mois pour les graphiques
+    // Create monthly statistics for charts
     const monthlyData: { [key: string]: any } = {};
 
     reservations.forEach((res) => {
@@ -189,7 +189,7 @@ export class DashboardComponent implements OnInit {
       monthlyData[monthKey].revenue += res.total_price;
     });
 
-    // Convertir en tableaux pour les graphiques
+    // Convert to arrays for charts
     this.reservationsByMonth = Object.values(monthlyData).map((item) => ({
       name: item.month,
       value: item.count,
@@ -219,7 +219,7 @@ export class DashboardComponent implements OnInit {
     return months[monthIndex];
   }
 
-  // Formater les nombres pour l'affichage
+  // Format numbers for display
   formatNumber(num: number): string {
     return num.toLocaleString('fr-TN');
   }

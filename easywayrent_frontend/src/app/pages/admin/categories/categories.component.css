@@ -45,7 +45,6 @@
   border: 2px solid var(--bs-primary);
   border-radius: 1rem;
   padding: 1rem;
-  /* transform: translate3d(0px, 0px, 80px); */
   box-shadow: rgba(100, 100, 111, 0.2) 0px 17px 10px -10px;
 }
 
@@ -58,10 +57,12 @@
   color: var(--bs-primary);
   font-size: 0.6em;
   font-weight: 700;
+  text-wrap: nowrap;
 }
 
 .cars-box .count {
   font-size: 1.2em;
   font-weight: 800;
   color: var(--bs-primar);
+  text-wrap: nowrap;
 }

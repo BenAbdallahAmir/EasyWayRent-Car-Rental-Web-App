@@ -19,17 +19,17 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // Vérifier si l'utilisateur est connecté
+    // Verify if the user is logged in
     if (this.authService.isLoggedIn()) {
-      // Ajouter le token à la requête
+      // Add the token to the request
       request = this.addToken(request, this.authService.getToken() as string);
     }
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        // Gérer les erreurs d'authentification (token expiré, etc.)
+        // Manage errors
         if (error.status === 401) {
-          // Déconnecter l'utilisateur et rediriger vers la page de connexion
+          // logout the user if the token is invalid or expired
           this.authService.logout().subscribe();
           this.router.navigate(['/login']);
         }

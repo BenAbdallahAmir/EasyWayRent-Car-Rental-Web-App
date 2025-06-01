@@ -43,13 +43,13 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): boolean | UrlTree {
     if (this.authService.isLoggedIn()) {
-      // Vérification des rôles si nécessaire
+      // verify if the user has the required role for the route
       const expectedRole = route.data['role'];
       if (expectedRole) {
         const userRole = this.authService.getCurrentUser()?.role;
 
         if (expectedRole === 'admin' && userRole !== 'admin') {
-          // Rediriger vers une page d'accès refusé ou page d'accueil
+          // Redirect to access denied if user is not admin
           return this.router.createUrlTree(['/access-denied']);
         }
       }
@@ -57,7 +57,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return true;
     }
 
-    // Stocker l'URL pour redirection après connexion
+    // Store the return URL to redirect after login
     return this.router.createUrlTree(['/login'], {
       queryParams: { returnUrl: state.url },
     });

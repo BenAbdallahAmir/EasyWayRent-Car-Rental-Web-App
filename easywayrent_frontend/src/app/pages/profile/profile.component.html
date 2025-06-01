@@ -33,7 +33,7 @@
             {{ successMessage }}
           </div>
 
-          <!-- Informations du profil en mode lecture -->
+          <!-- Profile information in read-only mode -->
           <div *ngIf="!isEditing && currentUser" class="row mb-4">
             <div class="col-md-6">
               <div class="mb-3">
@@ -57,9 +57,9 @@
             </div>
           </div>
 
-          <!-- Formulaire de modification du profil -->
+          <!-- Profile edit form -->
           <form *ngIf="isEditing" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-            <!-- Nom -->
+            <!-- Name -->
             <div class="mb-3">
               <label for="name" class="form-label">Fullname</label>
               <input type="text" id="name" formControlName="name" class="form-control"
@@ -82,7 +82,7 @@
               </div>
             </div>
 
-            <!-- Téléphone -->
+            <!-- Phone -->
             <div class="mb-3">
               <label for="phone" class="form-label">Phone number</label>
               <input type="tel" id="phone" formControlName="phone" class="form-control"
@@ -93,7 +93,7 @@
               </div>
             </div>
 
-            <!-- Adresse -->
+            <!-- Address -->
             <div class="mb-3">
               <label for="address" class="form-label">Address</label>
               <textarea id="address" formControlName="address" rows="3" class="form-control"
@@ -116,7 +116,7 @@
             </div>
           </form>
 
-          <!-- Formulaire de changement de mot de passe -->
+          <!-- Password change form -->
           <form *ngIf="showPasswordForm" [formGroup]="passwordForm" (ngSubmit)="updatePassword()"
             class="mt-4 pt-4 border-top">
             <h4 class="mb-3">Update password</h4>

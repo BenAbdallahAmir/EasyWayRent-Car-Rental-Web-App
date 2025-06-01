@@ -65,7 +65,7 @@
         </div>
         <div class="card-body">
           <form [formGroup]="reservationForm" (ngSubmit)="submitToCart()">
-            <!-- Date de début -->
+            <!-- Start date -->
             <div class="mb-3">
               <label for="start_date" class="form-label">Start date <span class="text-danger">*</span></label>
               <input type="date" id="start_date" class="form-control" formControlName="start_date" [min]="minStartDate"
@@ -76,7 +76,7 @@
               </div>
             </div>
 
-            <!-- Date de fin -->
+            <!-- End date -->
             <div class="mb-3">
               <label for="end_date" class="form-label">End date <span class="text-danger">*</span></label>
               <input type="date" id="end_date" class="form-control" formControlName="end_date" [min]="minEndDate"
@@ -87,7 +87,7 @@
               </div>
             </div>
 
-            <!-- Lieu de prise en charge -->
+            <!-- Pickup location -->
             <div class="mb-3">
               <label for="pickup_location" class="form-label">Pickup location <span
                   class="text-danger">*</span></label>
@@ -100,7 +100,7 @@
               </div>
             </div>
 
-            <!-- Lieu de restitution -->
+            <!-- Drop-off location -->
             <div class="mb-3">
               <label for="dropoff_location" class="form-label">Drop-off location <span
                   class="text-danger">*</span></label>
@@ -113,7 +113,7 @@
               </div>
             </div>
 
-            <!-- Méthode de paiement -->
+            <!-- Payment method -->
             <div class="mb-3">
               <label for="payment_method" class="form-label">Payment method <span
                   class="text-danger">*</span></label>
@@ -129,7 +129,7 @@
               </div>
             </div>
 
-            <!-- Résumé de la réservation -->
+            <!-- Reservation summary -->
             <div class="card bg-light mt-4 mb-4">
               <div class="card-body">
                 <h5 class="card-title">Reservation Summary</h5>

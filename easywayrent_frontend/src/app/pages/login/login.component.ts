@@ -23,12 +23,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Rediriger si déjà connecté
-    // if (this.authService.isLoggedIn()) {
-    //   this.router.navigate(['/home']);
-    //   return;
-    // }
-
     this.initForm();
   }
 
@@ -53,9 +47,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe({
       next: (response) => {
         this.successMessage = response.message;
-        // Redirection après un court délai pour que l'utilisateur voie le message de succès
+        // Redirect after a short delay so the user can see the success message
         setTimeout(() => {
-          // Rediriger l'utilisateur en fonction de son rôle
+          // Redirect the user based on their role
           if (response.user.role === 'admin') {
             this.router.navigate(['/admin/dashboard']);
           } else {
